@@ -2,3 +2,9 @@
 .*.swp
 .vscode/
 .code-workspace
+out/
+.idea/
+.idea_modules/
+*.iml
+*.ipr
+*.iws
