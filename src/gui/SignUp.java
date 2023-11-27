@@ -11,16 +11,16 @@ public class SignUp extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        image2 = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
         username2 = new javax.swing.JTextField();
-        UsernameLabel = new javax.swing.JLabel();
-        Username2Label = new javax.swing.JLabel();
-        PasswordLabel = new javax.swing.JLabel();
-        Password2Label = new javax.swing.JLabel();
+        usernameLabel = new javax.swing.JLabel();
+        username2Label = new javax.swing.JLabel();
+        passwordLabel = new javax.swing.JLabel();
+        password2Label = new javax.swing.JLabel();
         password2 = new javax.swing.JTextField();
         password = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         signUpBtn = new javax.swing.JButton();
         logInLabel = new javax.swing.JLabel();
 
@@ -29,7 +29,7 @@ public class SignUp extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        image2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image2.png"))); // NOI18N
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/image2.png"))); // NOI18N
 
         username.setFont(new java.awt.Font("Cantarell", 0, 18)); // NOI18N
         username.addActionListener(new java.awt.event.ActionListener() {
@@ -45,13 +45,13 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        UsernameLabel.setText("Username");
+        usernameLabel.setText("Username");
 
-        Username2Label.setText("Confirm Username");
+        username2Label.setText("Confirm Username");
 
-        PasswordLabel.setText("Password");
+        passwordLabel.setText("Password");
 
-        Password2Label.setText("Confirm Password");
+        password2Label.setText("Confirm Password");
 
         password2.setFont(new java.awt.Font("Cantarell", 0, 18)); // NOI18N
         password2.addActionListener(new java.awt.event.ActionListener() {
@@ -67,8 +67,8 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Lato Black", 1, 36)); // NOI18N
-        jLabel1.setText("Create an account");
+        titleLabel.setFont(new java.awt.Font("Lato Black", 1, 36)); // NOI18N
+        titleLabel.setText("Create an account");
 
         signUpBtn.setBackground(new java.awt.Color(102, 153, 255));
         signUpBtn.setFont(new java.awt.Font("Cantarell Extra Bold", 0, 18)); // NOI18N
@@ -98,18 +98,18 @@ public class SignUp extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(password2)
-                        .addComponent(UsernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(username)
-                        .addComponent(Password2Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(password2Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(password)
-                        .addComponent(PasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Username2Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
+                        .addComponent(passwordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(username2Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(titleLabel)
                         .addComponent(signUpBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(username2))
                     .addComponent(logInLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
-                .addComponent(image2, javax.swing.GroupLayout.PREFERRED_SIZE, 623, Short.MAX_VALUE)
+                .addComponent(image, javax.swing.GroupLayout.PREFERRED_SIZE, 623, Short.MAX_VALUE)
                 .addGap(127, 127, 127))
         );
         jPanel1Layout.setVerticalGroup(
@@ -118,25 +118,25 @@ public class SignUp extends javax.swing.JFrame {
                 .addGap(61, 61, 61)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(image2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(79, 79, 79))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(UsernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Username2Label)
+                        .addComponent(username2Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(username2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(PasswordLabel)
+                        .addComponent(passwordLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Password2Label)
+                        .addComponent(password2Label)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(password2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -189,18 +189,18 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_logInLabelMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Password2Label;
-    private javax.swing.JLabel PasswordLabel;
-    private javax.swing.JLabel Username2Label;
-    private javax.swing.JLabel UsernameLabel;
-    private javax.swing.JLabel image2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel image;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel logInLabel;
     private javax.swing.JTextField password;
     private javax.swing.JTextField password2;
+    private javax.swing.JLabel password2Label;
+    private javax.swing.JLabel passwordLabel;
     private javax.swing.JButton signUpBtn;
+    private javax.swing.JLabel titleLabel;
     private javax.swing.JTextField username;
     private javax.swing.JTextField username2;
+    private javax.swing.JLabel username2Label;
+    private javax.swing.JLabel usernameLabel;
     // End of variables declaration//GEN-END:variables
 }
