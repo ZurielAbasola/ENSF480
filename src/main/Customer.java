@@ -5,6 +5,11 @@ class Customer extends User {
         super(name, address, username, password);
     }
 
+    public Customer(String name, Address address, String username, String password, Membership membership) {
+        super(name, address, username, password);
+        this.membership = membership;
+    }
+
     public Membership getMembership() {
         return membership;
     }

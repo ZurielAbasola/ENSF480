@@ -33,4 +33,12 @@ class Plane {
         String seatKey = getSeatKey(row, letter);
         seats.put(seatKey, seat);
     }
+
+    public Map<String, Ticket> makeTickets() {
+        Map<String, Ticket> ticketMap = new HashMap<>();
+        for (Map.Entry<String, Seat> entry : seats.entrySet()) {
+            ticketMap.put(entry.getKey(), null);
+        }
+        return ticketMap;
+    }
 }

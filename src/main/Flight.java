@@ -7,10 +7,12 @@ class Flight {
 	private LocalDateTime arrivalDateTime;
 	private Airport origin;
 	private Airport destination;
+    private Map<String, Ticket> tickets;
 
 	public Flight(Plane plane, Crew crew, LocalDateTime departureDateTime,
                   LocalDateTime arrivalDateTime, Airport origin, Airport destination) {
         this.plane = plane;
+        this.tickets = plane.makeTickets();
         this.crew = crew;
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
@@ -66,5 +68,9 @@ class Flight {
 
     public void setDestination(Airport destination) {
         this.destination = destination;
+    }
+
+    public Boolean isSeatAvailable(String location) {
+        return tickets.get(seatKey) == null;
     }
 }
