@@ -1,10 +1,9 @@
 class Seat {
 	private String location; // row + letter (I don't love the name location but couldn't think of a better one)
-	private float price;
+	private float priceMultiplier;
 
 	public Seat(String location) {
 		this.location = location;
-		this.available = false;
 	}
 
 	// getters and setters
@@ -16,4 +15,13 @@ class Seat {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public float getPriceMultiplier() {
+    	return priceMultiplier;
+    }
+
+    // public static utility function
+    public static String getSeatKey(int row, String letter) {
+		return row + letter;
+	}
 }

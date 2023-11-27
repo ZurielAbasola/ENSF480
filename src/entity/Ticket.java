@@ -1,15 +1,23 @@
 public class Ticket {
+    private String ticketHolderId;
     private Flight flight;
     private Seat seat;
-    private Receipt receipt;
     private float price; // maybe this should be part of the seat or the flight though
     private CancellationInsurance calcellationInsurance;
+    private boolean sold;
 
-    public Ticket(Flight flight, Seat seat, Receipt receipt, float price) {
+    public Ticket(Flight flight, Seat seat, float basePrice, String ticketHolderId) {
         this.flight = flight;
         this.seat = seat;
-        this.receipt = receipt;
-        this.price = price;
+        this.price = basePrice * seat.getPriceMultiplier();
+        this.ticketHolderId = ticketHolderId;
+        this.sold = false;
+        this.cancellationInsurance = null;
+    }
+
+    public Ticket(Flight flight, Seat seat, float basePrice, String ticketHolderId, CancellationInsurance cancellationInsurance) {
+        this(flight, seat, basePrice, ticketHolderId);
+        this.cancellationInsurance = cancellationInsurance;
     }
 
     // getters and setters
@@ -30,14 +38,6 @@ public class Ticket {
         this.seat = seat;
     }
 
-    public Receipt getReceipt() {
-        return receipt;
-    }
-
-    public void setReceipt(Receipt receipt) {
-        this.receipt = receipt;
-    }
-
     public float getPrice() {
         return price;
     }
@@ -52,5 +52,13 @@ public class Ticket {
 
     public void setCancellationInsurance(CancellationInsurance cancellationInsurance) {
         this.cancellationInsurance = cancellationInsurance;
+    }
+
+    public Boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
     }
 }

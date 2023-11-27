@@ -1,24 +1,28 @@
 
 
 class UserController extends Singleton {
-	User currentUser;
+	static User currentUser;
+
+	public ArrayList<Customer> getRegisteredUsers() {
+		return SQLConnector.getInstance().getRegisteredUsers();// just get all customers who's membership isn't null
+	}
 
 	public Customer registerCustomer(String name, Address address, String username, String password) {
 		Customer newCustomer = new Customer(name, address, username, password);
-		// save to database
+		SQLConnector.getInstance().addCustomer(newCustomer);
 		return newCustomer;
 	}
 
 	public Customer registerCustomer(String name, Address address, String username, String password, Membership membership) {
 		Customer newCustomer = new Customer(name, address, username, password, membership);
-		// save to database
+		SQLConnector.getInstance().addCustomer(newCustomer);
 		return newCustomer;
 	}
 
 	public Customer registerExistingCustomer(String customerId, Membership membership) {
 		Customer customerToRegister = getCustomer(customerId);// needs to be implemented by boundary class
 		customerToRegister.setMembership(membership);
-		// update customer in database
+		SQLConnector.getInstance().updateCustomer(newCustomer);
 		return customerToRegister;
 	}
 

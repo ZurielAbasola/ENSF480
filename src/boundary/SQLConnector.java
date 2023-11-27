@@ -1,0 +1,5 @@
+
+
+class SQLConnector extends DatabaseConnector {
+	
+}
