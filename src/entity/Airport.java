@@ -7,7 +7,7 @@ class Airport {
 		this.code = code;
 	}
 
-	// getters and setters
+	// getters and setters (do setters even really make sense here?)
 
 	public Address getAddress() {
         return address;

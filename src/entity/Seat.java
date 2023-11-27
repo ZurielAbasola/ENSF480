@@ -1,11 +1,9 @@
 class Seat {
 	private String location; // row + letter (I don't love the name location but couldn't think of a better one)
-	// maybe enum for type or we just make subclasses
-	Boolean available; // probably makes more sense to put something like this on a flight instead of a seat, but not 100% sure
+	private float priceMultiplier;
 
 	public Seat(String location) {
 		this.location = location;
-		this.available = false;
 	}
 
 	// getters and setters
@@ -18,11 +16,12 @@ class Seat {
         this.location = location;
     }
 
-    public Boolean isAvailable() {
-        return available;
+    public float getPriceMultiplier() {
+    	return priceMultiplier;
     }
 
-    public void setAvailable(Boolean available) {
-        this.available = available;
-    }
+    // public static utility function
+    public static String getSeatKey(int row, String letter) {
+		return row + letter;
+	}
 }

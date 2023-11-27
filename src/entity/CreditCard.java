@@ -8,4 +8,9 @@ class CreditCard {
         this.expiry = expiry;
         this.cvv = cvv;
     }
+
+    public Boolean charge(float amount) {
+    	// in reality would connect to bank here and make sure there's enough credit left
+    	return true;
+    }
 }
