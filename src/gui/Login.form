@@ -52,11 +52,11 @@
                       <Component id="titleLabel" alignment="2" max="32767" attributes="0"/>
                       <Component id="username" alignment="2" max="32767" attributes="0"/>
                       <Component id="createAccountLabel" alignment="2" max="32767" attributes="0"/>
-                      <Component id="password" alignment="2" max="32767" attributes="0"/>
                       <Component id="signInBtn" alignment="2" min="-2" pref="410" max="-2" attributes="0"/>
                       <Component id="passwordLabel" alignment="2" max="32767" attributes="0"/>
+                      <Component id="password" alignment="2" min="-2" pref="411" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -64,20 +64,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="171" max="-2" attributes="0"/>
-                  <Component id="titleLabel" pref="48" max="32767" attributes="0"/>
+                  <Component id="titleLabel" pref="46" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Component id="usernameLabel" pref="26" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="username" pref="29" max="32767" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="passwordLabel" pref="28" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="password" pref="29" max="32767" attributes="0"/>
+                  <Component id="username" min="-2" pref="33" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="passwordLabel" pref="26" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="password" min="-2" pref="31" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="signInBtn" min="-2" pref="49" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="createAccountLabel" pref="28" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
+                  <Component id="createAccountLabel" pref="26" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
@@ -102,11 +102,6 @@
         <Component class="javax.swing.JTextField" name="username">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="usernameActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="password">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="createAccountLabel">
@@ -173,6 +168,14 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Password"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="password">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

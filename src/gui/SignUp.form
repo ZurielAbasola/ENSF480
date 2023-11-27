@@ -48,20 +48,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="194" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="password2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="usernameLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="username" alignment="0" max="32767" attributes="0"/>
-                          <Component id="password2Label" alignment="0" max="32767" attributes="0"/>
-                          <Component id="password" alignment="0" max="32767" attributes="0"/>
-                          <Component id="passwordLabel" alignment="0" max="32767" attributes="0"/>
-                          <Component id="username2Label" max="32767" attributes="0"/>
-                          <Component id="titleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="signUpBtn" alignment="0" min="-2" pref="410" max="-2" attributes="0"/>
-                          <Component id="username2" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="logInLabel" alignment="0" min="-2" pref="410" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Component id="usernameLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="username" alignment="0" max="32767" attributes="0"/>
+                      <Component id="password2Label" alignment="0" max="32767" attributes="0"/>
+                      <Component id="passwordLabel" alignment="0" max="32767" attributes="0"/>
+                      <Component id="username2Label" alignment="0" pref="410" max="32767" attributes="0"/>
+                      <Component id="titleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="signUpBtn" alignment="1" max="32767" attributes="0"/>
+                      <Component id="username2" alignment="0" max="32767" attributes="0"/>
+                      <Component id="logInLabel" alignment="1" max="32767" attributes="0"/>
+                      <Component id="password" max="32767" attributes="0"/>
+                      <Component id="password2" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Component id="image" pref="623" max="32767" attributes="0"/>
@@ -92,11 +90,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="passwordLabel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="password" min="-2" max="-2" attributes="0"/>
+                          <Component id="password" min="-2" pref="28" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="password2Label" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="password2" min="-2" max="-2" attributes="0"/>
+                          <Component id="password2" min="-2" pref="28" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="signUpBtn" min="-2" pref="49" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -156,26 +154,6 @@
             <Property name="text" type="java.lang.String" value="Confirm Password"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="password2">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Cantarell" size="18" style="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="password2ActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JTextField" name="password">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Cantarell" size="18" style="0"/>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="titleLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -216,6 +194,13 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="logInLabelMouseClicked"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="password">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="password2">
         </Component>
       </SubComponents>
     </Container>
