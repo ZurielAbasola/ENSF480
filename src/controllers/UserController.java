@@ -3,6 +3,10 @@
 class UserController extends Singleton {
 	static User currentUser;
 
+	public static UserController getInstance() {
+		return (UserController) Singleton.getInstance();
+	}
+
 	public ArrayList<Customer> getRegisteredUsers() {
 		return SQLConnector.getInstance().getRegisteredUsers();// just get all customers who's membership isn't null
 	}

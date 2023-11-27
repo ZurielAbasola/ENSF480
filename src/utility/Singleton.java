@@ -1,9 +1,7 @@
-
-
-class Singleton {
+public class Singleton {
 	protected Singleton instance = null;
 	protected Singleton() {}
-	public Singleton getInstance() {
+	public static Singleton getInstance() {
 		if(instance == null) {
 			instance = new Singleton();
 		}

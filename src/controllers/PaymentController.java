@@ -1,6 +1,11 @@
 
 
 class PaymentController extends Singleton {
+
+	public static PaymentController getInstance() {
+		return (PaymentController) Singleton.getInstance();
+	}
+
 	public Boolean makePayment(Ticket ticket, PaymentMethod paymentMethod, CancellationInsurance cancellationInsurance) {
 		float price = ticket.getPrice();
 		if(cancellationInsurance != null) {

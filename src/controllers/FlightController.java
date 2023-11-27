@@ -2,6 +2,10 @@
 
 class FlightController extends Singleton {
 
+	public static FlightController getInstance() {
+		return (FlightController) Singleton.getInstance();
+	}
+
 	public ArrayList<Flight> getFlights() {
 		return SQLConnector.getInstance().getAllFlights();
 	}
