@@ -1,10 +1,18 @@
 public class Ticket {
-    private String ticketHolderId;
+    private String ticketHolderId = null;
     private Flight flight;
     private Seat seat;
     private float price; // maybe this should be part of the seat or the flight though
     private CancellationInsurance calcellationInsurance;
     private boolean sold;
+
+    public Ticket(Flight flight, Seat seat, float basePrice) {
+        this.flight = flight;
+        this.seat = seat;
+        this.price = basePrice * seat.getPriceMultiplier();
+        this.sold = false;
+        this.cancellationInsurance = null;
+    }
 
     public Ticket(Flight flight, Seat seat, float basePrice, String ticketHolderId) {
         this.flight = flight;
@@ -60,5 +68,13 @@ public class Ticket {
 
     public void setSold(boolean sold) {
         this.sold = sold;
+    }
+
+    public String getTicketHolderId() {
+        return ticketHolderId;
+    }
+
+    public void setTicketHolderId(String ticketHolderId) {
+        this.ticketHolderId = ticketHolderId;
     }
 }

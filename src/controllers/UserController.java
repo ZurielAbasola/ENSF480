@@ -34,7 +34,7 @@ class UserController extends Singleton {
 
 	public Boolean login(String username, String password) {
 		//do find in database for user with username and password
-		User loggedInUser = dbLogin();//base on db function
+		User loggedInUser = SQLConnector.getInstance().login(username, password);
 		if(loggedInUser != null) {
 			currentUser = loggedInUser;
 			return true
