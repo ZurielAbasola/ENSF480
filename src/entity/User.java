@@ -1,12 +1,12 @@
-class User {
-	protected String id;
+public class User {
+	protected int id;
 	protected String name;
 	protected Address address;
 	protected String username;
 	protected String password;
 
 	public User(String name, Address address, String username, String password) {
-        this.id = "" + Math.rand() * 1000000; // will improve later
+        this.id = Math.rand() * 1000000; // will improve later
         this.name = name;
         this.address = address;
         this.username = username;
@@ -15,11 +15,11 @@ class User {
 
     // getters and setters
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

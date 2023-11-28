@@ -1,4 +1,4 @@
-class CreditCard {
+public class CreditCard {
 	private int number;
 	private int expiry;
 	private int cvv;

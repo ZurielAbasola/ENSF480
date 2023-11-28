@@ -1,4 +1,4 @@
-class Customer extends User {
+public class Customer extends User {
 	private Membership membership = null;
 
 	public Customer(String name, Address address, String username, String password) {

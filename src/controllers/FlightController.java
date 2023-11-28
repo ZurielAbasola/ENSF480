@@ -1,6 +1,6 @@
 
 
-class FlightController extends Singleton {
+public class FlightController extends Singleton {
 
 	public static FlightController getInstance() {
 		return (FlightController) Singleton.getInstance();

@@ -1,4 +1,4 @@
-class Seat {
+public class Seat {
 	private String location; // row + letter (I don't love the name location but couldn't think of a better one)
 	private float priceMultiplier;
 

@@ -1,4 +1,4 @@
-class Airport {
+public class Airport {
 	Address address;
 	String code;
 

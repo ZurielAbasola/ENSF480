@@ -1,5 +1,5 @@
 
 
-class SQLConnector extends DatabaseConnector {
+public class SQLConnector extends DatabaseConnector {
 	
 }

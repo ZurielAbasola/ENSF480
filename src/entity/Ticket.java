@@ -1,5 +1,5 @@
 public class Ticket {
-    private String ticketHolderId = null;
+    private int ticketHolderId = null;
     private Flight flight;
     private Seat seat;
     private float price; // maybe this should be part of the seat or the flight though
@@ -14,7 +14,7 @@ public class Ticket {
         this.cancellationInsurance = null;
     }
 
-    public Ticket(Flight flight, Seat seat, float basePrice, String ticketHolderId) {
+    public Ticket(Flight flight, Seat seat, float basePrice, int ticketHolderId) {
         this.flight = flight;
         this.seat = seat;
         this.price = basePrice * seat.getPriceMultiplier();
@@ -23,7 +23,7 @@ public class Ticket {
         this.cancellationInsurance = null;
     }
 
-    public Ticket(Flight flight, Seat seat, float basePrice, String ticketHolderId, CancellationInsurance cancellationInsurance) {
+    public Ticket(Flight flight, Seat seat, float basePrice, int ticketHolderId, CancellationInsurance cancellationInsurance) {
         this(flight, seat, basePrice, ticketHolderId);
         this.cancellationInsurance = cancellationInsurance;
     }

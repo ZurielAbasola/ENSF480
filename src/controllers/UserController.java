@@ -1,6 +1,6 @@
 
 
-class UserController extends Singleton {
+public class UserController extends Singleton {
 	static User currentUser;
 
 	public static UserController getInstance() {
@@ -24,7 +24,7 @@ class UserController extends Singleton {
 	}
 
 	public Customer registerExistingCustomer(String customerId, Membership membership) {
-		Customer customerToRegister = getCustomer(customerId);// needs to be implemented by boundary class
+		Customer customerToRegister = getCustomer(customerId);// needs to be implemented by boundary public class
 		customerToRegister.setMembership(membership);
 		SQLConnector.getInstance().updateCustomer(newCustomer);
 		return customerToRegister;

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class Crew {
+public class Crew {
 	private Pilot pilot;
 	private ArrayList<FlightAttendant> flightAttendants;
 

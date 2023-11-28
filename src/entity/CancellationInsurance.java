@@ -1,6 +1,6 @@
 // we could make a couple classes that inherit from this and have those as the options
 
-class CancellationInsurance {
+public class CancellationInsurance {
 	private float price;
 	private float refundAmount;
 

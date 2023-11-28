@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-class Membership {
+public class Membership {
 	private int id;
 	private LocalDate dateRegistered;
 	private LocalDate expiryDate;

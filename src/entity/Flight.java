@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 
-class Flight {
-    private String flightNumber;
+public class Flight {
+    private int flightNumber;
 	private Plane plane;
 	private Crew crew;
 	private LocalDateTime departureDateTime;
@@ -12,7 +12,7 @@ class Flight {
 
 	public Flight(Plane plane, Crew crew, LocalDateTime departureDateTime,
                   LocalDateTime arrivalDateTime, Airport origin, Airport destination, float basePrice) {
-        this.flightNumber = "" + Math.random() * 1000000; // for now
+        this.flightNumber = Math.random() * 1000000; // for now
         this.plane = plane;
         this.tickets = makeTickets(basePrice);
         this.crew = crew;
@@ -24,8 +24,10 @@ class Flight {
 
     private Map<String, Ticket> makeTickets(float basePrice) {
         Map<String, Ticket> ticketMap = new HashMap<>();
-        for (Map.Entry<String, Seat> entry : seats.entrySet()) {
-            ticketMap.put(entry.getKey(), new Ticket(this, plane.getSeat(entry.getKey()), basePrice));
+        for (Map.Entry<String, Seat> entry : plane.getSeats().entrySet()) {
+            Ticket ticket = new Ticket(this, plane.getSeat(entry.getKey()), basePrice);
+            SQLConnector.getInstance().addTicket(ticket);
+            ticketMap.put(entry.getKey(), ticket);
         }
         return ticketMap;
     }

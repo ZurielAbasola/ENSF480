@@ -1,6 +1,6 @@
 
 
-class PaymentController extends Singleton {
+public class PaymentController extends Singleton {
 
 	public static PaymentController getInstance() {
 		return (PaymentController) Singleton.getInstance();

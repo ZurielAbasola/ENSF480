@@ -1,5 +1,5 @@
 
-class Payment {
+public class Payment {
 	PaymentMethod method;
 	Receipt receipt = null;
 	Ticket ticket;
