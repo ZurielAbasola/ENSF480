@@ -142,9 +142,9 @@ public class Login extends javax.swing.JFrame {
         
         // TODO: Check if un && pw is in the database
         if (un.equals("John") && pw.equals("password")) {
-            UserPanel main = new UserPanel();
-            this.hide();
-            main.setVisible(true);
+            //UserPanel main = new UserPanel();
+            //this.hide();
+            //main.setVisible(true);
         }
         else 
         {
@@ -198,6 +198,7 @@ public class Login extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);
+                //new AdminPanel().setVisible(true);
             }
         });
     }
