@@ -1,5 +1,6 @@
 package entity;
 public class Ticket {
+    private int id;
     private Integer ticketHolderId = null;
     private Flight flight;
     private Seat seat;
@@ -7,7 +8,8 @@ public class Ticket {
     private CancellationInsurance cancellationInsurance;
     private boolean sold;
 
-    public Ticket(Flight flight, Seat seat, float basePrice) {
+    public Ticket(int id, Flight flight, Seat seat, float basePrice) {
+        this.id = id;
         this.flight = flight;
         this.seat = seat;
         this.price = basePrice * seat.getPriceMultiplier();
@@ -15,7 +17,8 @@ public class Ticket {
         this.cancellationInsurance = null;
     }
 
-    public Ticket(Flight flight, Seat seat, float basePrice, Integer ticketHolderId) {
+    public Ticket(int id, Flight flight, Seat seat, float basePrice, Integer ticketHolderId) {
+        this.id = id;
         this.flight = flight;
         this.seat = seat;
         this.price = basePrice * seat.getPriceMultiplier();
@@ -24,8 +27,8 @@ public class Ticket {
         this.cancellationInsurance = null;
     }
 
-    public Ticket(Flight flight, Seat seat, float basePrice, Integer ticketHolderId, CancellationInsurance cancellationInsurance) {
-        this(flight, seat, basePrice, ticketHolderId);
+    public Ticket(int id, Flight flight, Seat seat, float basePrice, Integer ticketHolderId, CancellationInsurance cancellationInsurance) {
+        this(id, flight, seat, basePrice, ticketHolderId);
         this.cancellationInsurance = cancellationInsurance;
     }
 
@@ -78,4 +81,8 @@ public class Ticket {
     public void setTicketHolderId(Integer ticketHolderId) {
         this.ticketHolderId = ticketHolderId;
     }
+
+    public int getID(){
+		return id;
+	}
 }

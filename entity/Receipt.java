@@ -2,6 +2,7 @@ package entity;
 import java.time.LocalDateTime;
 
 public class Receipt {
+    private int id;
 	private Integer purchaserId;
 	private Ticket ticket;
 	private LocalDateTime dateTime;
@@ -22,5 +23,9 @@ public class Receipt {
 
     public LocalDateTime getDateTime(){
         return dateTime;
+    }
+
+    public int getID(){
+        return id;
     }
 }

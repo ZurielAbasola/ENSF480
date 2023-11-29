@@ -34,6 +34,10 @@ public class Plane {
         }
     }
 
+    public Plane(int id, int numRows, int seatsPerRow, Map<String, Seat> seatsMap) {
+
+    }
+
     public Plane(int numRows) {
         this(numRows, 4);
     }
@@ -57,7 +61,8 @@ public class Plane {
         seats.put(seatKey, seat);
     }
 
-    public void setSeatFromSql(String seatKey, float price){
+    //utility function for creating planes from MySQL Database
+    public static void setSeatFromSql(String seatKey, float price, Map<String, Seat> seats){
         if(price == 1.35f){
             seats.put(seatKey, new ComfortSeat(seatKey));
         }else if(price == 2.1f){

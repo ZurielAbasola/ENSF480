@@ -15,6 +15,7 @@ public class Flight {
 	private Airport destination;
     private Map<String, Ticket> tickets;
 
+    //brand new flight with new tickets
 	public Flight(Plane plane, Crew crew, LocalDateTime departureDateTime,
                   LocalDateTime arrivalDateTime, Airport origin, Airport destination, float basePrice) {
         this.flightNumber = (int) Math.random() * 1000000; // for now
@@ -27,11 +28,24 @@ public class Flight {
         this.destination = destination;
     }
 
+    //creating a flight for visual purposes on flight lookup with a specified flightnum and specified fields
+    public Flight(int flightNum, Plane plane, Crew crew, LocalDateTime departureDateTime,
+                  LocalDateTime arrivalDateTime, Airport origin, Airport destination, float basePrice) {
+        this.flightNumber = flightNum;
+        this.plane = plane;
+        this.crew = crew;
+        this.departureDateTime = departureDateTime;
+        this.arrivalDateTime = arrivalDateTime;
+        this.origin = origin;
+        this.destination = destination;
+        this.tickets = makeTickets(basePrice);
+    }
+
     private Map<String, Ticket> makeTickets(float basePrice) {
         Map<String, Ticket> ticketMap = new HashMap<>();
         for (Map.Entry<String, Seat> entry : plane.getSeats().entrySet()) {
-            Ticket ticket = new Ticket(this, plane.getSeat(entry.getKey()), basePrice);
-            SQLConnector.getInstance().addTicket(ticket);
+            Ticket ticket = new Ticket(((int) Math.random() * 1000000), this, plane.getSeat(entry.getKey()), basePrice);
+            SQLConnector.addTicket(ticket);
             ticketMap.put(entry.getKey(), ticket);
         }
         return ticketMap;
@@ -89,6 +103,10 @@ public class Flight {
 
     public Map<String, Ticket> getTickets() {
         return tickets;
+    }
+
+    public void setTickets(Map<String, Ticket> ticketMap){
+        this.tickets = ticketMap;
     }
 
     public Boolean isSeatAvailable(String location) {

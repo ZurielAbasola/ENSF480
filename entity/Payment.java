@@ -30,4 +30,11 @@ public class Payment {
     public int getID(){
         return id;
     }
+
+    public Ticket getTicket(){
+        return ticket;
+    }
+
+
+
 }
