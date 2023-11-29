@@ -133,6 +133,7 @@ public class SQLConnector extends Singleton{
                 "arrivalDateTime DATETIME NOT NULL, " +
                 "origin_id INT, " +
                 "destination_id INT, " +
+                "basePrice FLOAT, " +
                 "FOREIGN KEY (plane_id) REFERENCES Plane(id), " +
                 "FOREIGN KEY (crew_id) REFERENCES Crew(id), " +
                 "FOREIGN KEY (origin_id) REFERENCES Airport(id), " +
@@ -501,7 +502,7 @@ public class SQLConnector extends Singleton{
                 resultSet.getObject("arrivalDateTime", LocalDateTime.class),
                 makeAirport(resultSet.getInt("origin_id")), 
                 makeAirport(resultSet.getInt("destination_id")),
-                25.0f
+                resultSet.getFloat("basePrice")
             );
 
             return flight;
@@ -723,7 +724,7 @@ public class SQLConnector extends Singleton{
         //     }   
         //     return ticketMap;
         // }
-        
+
         //---------------------------------------------------------------------------------------------------------------//
         //------------------------------------------- SQL FUNCTIONS -----------------------------------------------------//
         //---------------------------------------------------------------------------------------------------------------//
@@ -875,7 +876,7 @@ public class SQLConnector extends Singleton{
                 SQLInsertions.insertFlightData(connection, newFlight.getFlightNum(), newFlight.getPlane().getID(), 
                                                 newFlight.getCrew().getID(), formattedDepartTime,
                                                 formattedArriveTime, newFlight.getOrigin().getID(),
-                                                newFlight.getDestination().getID());
+                                                newFlight.getDestination().getID(), newFlight.getBasePrice());
             }catch(SQLException e) {
                 e.printStackTrace();
             }finally {

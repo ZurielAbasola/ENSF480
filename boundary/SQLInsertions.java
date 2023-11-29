@@ -199,10 +199,10 @@ public class SQLInsertions {
     }
 
     public static void insertFlightData(Connection connection, int flightNumber, int planeId, int crewId,
-            String departureDateTime, String arrivalDateTime, int originId, int destinationId) {
+            String departureDateTime, String arrivalDateTime, int originId, int destinationId, float basePrice) {
         try {
             String query = "INSERT INTO Flight (flightNumber, plane_id, crew_id, departureDateTime, arrivalDateTime, " +
-                    "origin_id, destination_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                    "origin_id, destination_id, basePrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 preparedStatement.setInt(1, flightNumber);
                 preparedStatement.setInt(2, planeId);
@@ -211,6 +211,7 @@ public class SQLInsertions {
                 preparedStatement.setString(5, arrivalDateTime);
                 preparedStatement.setInt(6, originId);
                 preparedStatement.setInt(7, destinationId);
+                preparedStatement.setFloat(8, basePrice);
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 System.out.println(rowsAffected + " row(s) inserted into Flight table.");
@@ -370,7 +371,7 @@ public class SQLInsertions {
             insertSeatData(connection, "A2", 1.35f, 1);
             insertCrewData(connection, 1, 111111);
             insertFlightAttendantData(connection, 666666, 1);
-            insertFlightData(connection, 123456, 1, 1, "2023-01-01 12:00:00", "2023-01-01 15:00:00", 1, 2);
+            insertFlightData(connection, 123456, 1, 1, "2023-01-01 12:00:00", "2023-01-01 15:00:00", 1, 2, 25.0f);
             CancellationInsurance CI = new CancellationInsurance(1, 5.0f, 100.0f);
             CancellationInsurance CI2 = new CancellationInsurance(2, 10.0f, 125.0f);
 
