@@ -4,17 +4,24 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Map;
 
 import utility.*;
 import entity.*;
 
 public class SQLConnector extends Singleton{
+    public final static String HOST = "localhost:3306";
+    public final static String USER = "root";
+    public final static String PASS = "bio"; 
+    public final static String DB = "Flights";
+
+    private static final String DB_URL_PREFIX = "jdbc:mysql://";
+
     public static SQLConnector getInstance() {
 		return (SQLConnector) Singleton.getInstance();
 	}
-    private static final String DB_URL_PREFIX = "jdbc:mysql://";
 
-    // Function to create a server connection and database
+    // Function to create a server connection and DB
     public static Connection createDatabaseConnection(String hostName, String userName, String userPassword, String databaseName) throws SQLException {
 
         Connection connection = DriverManager.getConnection(DB_URL_PREFIX + hostName, userName, userPassword);
@@ -23,7 +30,7 @@ public class SQLConnector extends Singleton{
             statement.executeUpdate("CREATE DATABASE IF NOT EXISTS " + databaseName);
         }
 
-        // Reconnect to the specified database
+        // Reconnect to the specified DB
         connection = DriverManager.getConnection(DB_URL_PREFIX + hostName + "/" + databaseName, userName, userPassword);
         
         return connection;
@@ -39,13 +46,9 @@ public class SQLConnector extends Singleton{
     }
 
     public static void createDatabase(){
-        String host = "localhost:3306";
-        String user = "root";
-        String password = "bio"; 
-        String database = "Flights";
         Connection connection = null;
         try {
-            connection = createDatabaseConnection(host, user, password, database);
+            connection = createDatabaseConnection(HOST, USER, PASS, DB);
             // Call the createTable method for each table
             createTable(connection, "CREATE TABLE IF NOT EXISTS User (" +
                 "id INT PRIMARY KEY, " +
@@ -207,15 +210,10 @@ public class SQLConnector extends Singleton{
         //---------------------------- HELPERS-----------------------------------//
         //-----------------------------------------------------------------------//
 
-        private static void makeSeats(int airplane_id, Plane plane){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
+        private static Map<String, Seat> makeSeats(int airplane_id, Map<String, Seat> seatMap){
             Connection connection = null;
-
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Seat WHERE airplane_id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, airplane_id);
@@ -224,7 +222,7 @@ public class SQLConnector extends Singleton{
                             String location = resultSet.getString("location");
                             float multi = resultSet.getFloat("priceMultiplier");
 
-                            plane.setSeatFromSql(location, multi);
+                            Plane.setSeatFromSql(location, multi, seatMap);
                         }
                     }
                 }
@@ -241,19 +239,14 @@ public class SQLConnector extends Singleton{
                 e.printStackTrace();
                 }
             }
+            return seatMap;
         }
 
         private static Plane makePlane(int plane_id){
             Plane plane = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-
             try {
-
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Plane WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, plane_id);
@@ -264,7 +257,8 @@ public class SQLConnector extends Singleton{
                             int seatsPerRow = resultSet.getInt("seatsPerRow"); 
                             plane = new Plane(numRows,seatsPerRow);
 
-                            makeSeats(plane_id, plane);
+                            Map<String, Seat> seatMap = null;
+                            seatMap = makeSeats(plane_id, seatMap);
                             plane.setID(plane_id);
                         }
                     }
@@ -287,14 +281,9 @@ public class SQLConnector extends Singleton{
         }
         private static Address makeAddress(int user_id){
             Address address = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM User WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, user_id);
@@ -328,14 +317,10 @@ public class SQLConnector extends Singleton{
 
         private static FlightAttendant makeFA(int user_id){
             FlightAttendant FA = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
 
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM User WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, user_id);
@@ -368,14 +353,10 @@ public class SQLConnector extends Singleton{
 
         private static ArrayList<FlightAttendant> makeFAList(int crew_id){
             ArrayList<FlightAttendant> FAlist = new ArrayList<>();
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
 
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM FlightAttendant WHERE crew_id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(2, crew_id);
@@ -404,14 +385,10 @@ public class SQLConnector extends Singleton{
         }
         private static Pilot makePilot(int pilot_id){
             Pilot pilot = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
 
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM User WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, pilot_id);
@@ -444,14 +421,10 @@ public class SQLConnector extends Singleton{
 
         private static Airport makeAirport(int airport_id){
             Airport airport = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
 
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Airport WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, airport_id);
@@ -487,15 +460,10 @@ public class SQLConnector extends Singleton{
         }
         private static Crew makeCrew(int crew_id){
             Crew crew = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-
             try {
 
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Crew WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, crew_id);
@@ -524,31 +492,48 @@ public class SQLConnector extends Singleton{
             return crew;
         }
         private static Flight mapResultSetToFlight(ResultSet resultSet) throws SQLException {
-        
-            int flight_number = (resultSet.getInt("flightNumber"));
 
             Flight flight = new Flight(
+                resultSet.getInt("flightNumber"),
                 makePlane(resultSet.getInt("plane_id")), 
                 makeCrew(resultSet.getInt("crew_id")),  
                 resultSet.getObject("departureDateTime", LocalDateTime.class),
                 resultSet.getObject("arrivalDateTime", LocalDateTime.class),
                 makeAirport(resultSet.getInt("origin_id")), 
-                makeAirport(resultSet.getInt("destination_id")), 
-                0.0f 
+                makeAirport(resultSet.getInt("destination_id")),
+                25.0f
             );
-            flight.setFlightNum(flight_number);
+
             return flight;
         }
 
+        // private static Flight mapResultSetToFlightWithTickets(ResultSet resultSet) throws SQLException {
+        
+        //     int flight_number = (resultSet.getInt("flightNumber"));
+            
+        //     Flight newFlight = new Flight(
+        //         flight_number,
+        //         makePlane(resultSet.getInt("plane_id")), 
+        //         makeCrew(resultSet.getInt("crew_id")),  
+        //         resultSet.getObject("departureDateTime", LocalDateTime.class),
+        //         resultSet.getObject("arrivalDateTime", LocalDateTime.class),
+        //         makeAirport(resultSet.getInt("origin_id")), 
+        //         makeAirport(resultSet.getInt("destination_id")), 
+        //         0.0f
+        //     );
+            
+        //     Map<String, Ticket> ticketMap = makeTicketMap(flight_number, newFlight);
+        //     newFlight.setTickets(ticketMap);
+
+        //     return newFlight;
+        // }
+
+
         private static int getDestinationId(String destination){
             int destination_id = 0;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Airport WHERE address_city = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, destination);
@@ -574,88 +559,75 @@ public class SQLConnector extends Singleton{
             }   
             return destination_id;
         }
-        private static int findCrew(int pilot_id){
-            int crew_id = 0;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
-            Connection connection = null;
-            try {
-                connection = createDatabaseConnection(host, user, password, database);
-                String query = "SELECT * FROM Crew WHERE pilot_id = ?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setInt(1, pilot_id);
-                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        if (resultSet.next()) {
-                            crew_id = resultSet.getInt("id");
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally {
-                try {
-                // Close the connection in a finally block to ensure it's closed
-                    if (connection != null && !connection.isClosed()) {
-                        connection.close();
-                        System.out.println("Connection closed successfully");
-                    }
-                } catch (SQLException e) {
-                e.printStackTrace();
-                }
-            }   
-            return crew_id;
-        }
+        // private static int findCrew(int pilot_id){
+        //     int crew_id = 0;
+        //     Connection connection = null;
+        //     try {
+        //         connection = createDatabaseConnection(HOST, USER, PASS, DB);
+        //         String query = "SELECT * FROM Crew WHERE pilot_id = ?";
+        //         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        //             preparedStatement.setInt(1, pilot_id);
+        //             try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        //                 if (resultSet.next()) {
+        //                     crew_id = resultSet.getInt("id");
+        //                 }
+        //             }
+        //         }
+        //     } catch (SQLException e) {
+        //         e.printStackTrace();
+        //     }finally {
+        //         try {
+        //         // Close the connection in a finally block to ensure it's closed
+        //             if (connection != null && !connection.isClosed()) {
+        //                 connection.close();
+        //                 System.out.println("Connection closed successfully");
+        //             }
+        //         } catch (SQLException e) {
+        //         e.printStackTrace();
+        //         }
+        //     }   
+        //     return crew_id;
+        // }
 
-        private static int findSeat(Ticket ticket, Seat seat){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
-            Connection connection = null;
-            int seat_id = 0;
-            try {
-                connection = createDatabaseConnection(host, user, password, database);
-                String query = "SELECT s.seat_id " +
-                                "FROM Ticket t " +
-                                "JOIN Flight f ON t.flight_num = f.flightNumber " +
-                                "JOIN Seat s ON f.plane_id = s.airplane_id" + 
-                                "WHERE t.flight_num = ? AND s.location = ?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setInt(1, ticket.getFlight().getFlightNum());
-                    preparedStatement.setString(2, seat.getLocation());
-                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        if (resultSet.next()) {
-                            seat_id = resultSet.getInt("id");
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally {
-                try {
-                // Close the connection in a finally block to ensure it's closed
-                    if (connection != null && !connection.isClosed()) {
-                        connection.close();
-                        System.out.println("Connection closed successfully");
-                    }
-                } catch (SQLException e) {
-                e.printStackTrace();
-                }
-            }   
-            return seat_id;
-        }
+        // private static int findSeat(Ticket ticket, Seat seat){
+        //     Connection connection = null;
+        //     int seat_id = 0;
+        //     try {
+        //         connection = createDatabaseConnection(HOST, USER, PASS, DB);
+        //         String query = "SELECT s.seat_id " +
+        //                         "FROM Ticket t " +
+        //                         "JOIN Flight f ON t.flight_num = f.flightNumber " +
+        //                         "JOIN Seat s ON f.plane_id = s.airplane_id" + 
+        //                         "WHERE t.flight_num = ? AND s.location = ?";
+        //         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        //             preparedStatement.setInt(1, ticket.getFlight().getFlightNum());
+        //             preparedStatement.setString(2, seat.getLocation());
+        //             try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        //                 if (resultSet.next()) {
+        //                     seat_id = resultSet.getInt("id");
+        //                 }
+        //             }
+        //         }
+        //     } catch (SQLException e) {
+        //         e.printStackTrace();
+        //     }finally {
+        //         try {
+        //         // Close the connection in a finally block to ensure it's closed
+        //             if (connection != null && !connection.isClosed()) {
+        //                 connection.close();
+        //                 System.out.println("Connection closed successfully");
+        //             }
+        //         } catch (SQLException e) {
+        //         e.printStackTrace();
+        //         }
+        //     }   
+        //     return seat_id;
+        // }
 
         private static void addMembership(Membership mb){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 SQLInsertions.insertMembershipData(connection, mb.getID(), mb.getRegDate().toString(), mb.getExpDate().toString(), mb.getCompUsed());
             }catch (SQLException e) {
                 e.printStackTrace();
@@ -673,14 +645,9 @@ public class SQLConnector extends Singleton{
         }
 
         private static void addUser(User newUser){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 SQLInsertions.insertUserData(connection, newUser.getId(), newUser.getName(), newUser.getAddress().getStreet(), newUser.getAddress().getCity(), 
                                                 newUser.getAddress().getProvince(), newUser.getAddress().getCountry(), newUser.getAddress().getPostalCode(), 
                                                 newUser.getUsername(),newUser.getPassword());
@@ -713,42 +680,50 @@ public class SQLConnector extends Singleton{
             return customer;
         }
 
-        private static int getTicketID(Ticket ticket){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
-            Connection connection = null;
-            int ticket_id = 0;
-            try {
-                connection = createDatabaseConnection(host, user, password, database);
-                String query = "SELECT t.id"+
-                                "FROM Receipt r" + 
-                                "JOIN Ticket t ON r.purchaserId = t.ticketHolderId" + 
-                                "WHERE r.purchaserId = ?";
-                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setInt(1, ticket.getTicketHolderId());
-                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        if (resultSet.next()) {
-                            ticket_id = resultSet.getInt("id");
-                        }
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally {
-                try {
-                // Close the connection in a finally block to ensure it's closed
-                    if (connection != null && !connection.isClosed()) {
-                        connection.close();
-                        System.out.println("Connection closed successfully");
-                    }
-                } catch (SQLException e) {
-                e.printStackTrace();
-                }
-            }   
-            return ticket_id;
-        }
+        // private static Ticket makeTicket(Flight flight){
+        //     Connection connection = null;
+        //     Ticket ticket = null;
+        //     try {
+        //         connection = createDatabaseConnection(HOST, USER, PASS, DB);
+        //         String query = "SELECT * from Seat WHERE ";
+        //     }catch(SQLException e){
+        //         e.printStackTrace();
+        //     }
+        //     return ticket;
+        // }
+
+        // private static Map<String, Ticket> makeTicketMap(int flight_number, Flight flight){
+        //     Connection connection = null;
+        //     Map<String, Ticket> ticketMap = null;
+        //     try {
+        //         connection = createDatabaseConnection(HOST, USER, PASS, DB);
+        //         String query = "SELECT * FROM Ticket WHERE flight_num = ?";
+        //         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        //             preparedStatement.setInt(1, flight_number);
+        //             try (ResultSet resultSet = preparedStatement.executeQuery()) {
+        //                 while (resultSet.next()) {
+        //                     //make logic for making ticket map here
+        //                     Ticket newticket = makeTicket(flight);
+        //                     ticketMap.put();
+        //                 }
+        //             }
+        //         }
+        //     } catch (SQLException e) {
+        //         e.printStackTrace();
+        //     }finally {
+        //         try {
+        //         // Close the connection in a finally block to ensure it's closed
+        //             if (connection != null && !connection.isClosed()) {
+        //                 connection.close();
+        //                 System.out.println("Connection closed successfully");
+        //             }
+        //         } catch (SQLException e) {
+        //         e.printStackTrace();
+        //         }
+        //     }   
+        //     return ticketMap;
+        // }
+        
         //---------------------------------------------------------------------------------------------------------------//
         //------------------------------------------- SQL FUNCTIONS -----------------------------------------------------//
         //---------------------------------------------------------------------------------------------------------------//
@@ -756,14 +731,9 @@ public class SQLConnector extends Singleton{
 
         public static void updateCustomer(Customer customer) {
             addMembership(customer.getMembership()); 
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-            
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "UPDATE Customer SET membership_id = ? WHERE user_id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, customer.getMembership().getID());
@@ -789,18 +759,17 @@ public class SQLConnector extends Singleton{
 
         public static ArrayList<Flight> getAllFlights(){
             ArrayList<Flight> flights = new ArrayList<>();
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Flight";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         while (resultSet.next()) {
                             //Do a bunch more queries inside this query to get all other information required - Airports with their addresses
+                            //Will create a List of flights with no references to their respective tickets - More for just visual purposes and 
+                            //displaying the list of available flights - getFlight gets a flight with all respective tickets, getFlight to be used
+                            //for creating ticketMap/seatMap
                             Flight flight = mapResultSetToFlight(resultSet);
                             flights.add(flight);
                         }
@@ -825,20 +794,19 @@ public class SQLConnector extends Singleton{
         
         public static ArrayList<Flight> getFlightsByDestination(String destination){
             ArrayList<Flight> flights = new ArrayList<>();
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             int destination_id = getDestinationId(destination);
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Flight WHERE flightNumber = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, destination_id);
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         while (resultSet.next()) {
                             //Do a bunch more queries inside this query to get all other information required - Airports with their addresses
+                            //Will create a List of flights with no references to their respective tickets - More for just visual purposes and 
+                            //displaying the list of available flights to a certain destination - getFlight gets a flight with all respective tickets, 
+                            //getFlight to be used for creating ticketMap/seatMap for an available flight
                             Flight flight = mapResultSetToFlight(resultSet);
                             flights.add(flight);
                         }
@@ -860,22 +828,20 @@ public class SQLConnector extends Singleton{
             return flights;
         }
 
-        public static Flight getFlight(Flight flight){
+        public static Flight getFlight(int flight_num){
             Flight the_Flight = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM Flight WHERE flightNumber = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setInt(1, flight.getFlightNum());
+                    preparedStatement.setInt(1, flight_num);
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         if (resultSet.next()) {
                             //Do a bunch more queries inside this query to get all other information required - Airports with their addresses
+                            //This will create a flight with references to all its current tickets
                             the_Flight = mapResultSetToFlight(resultSet);
+
                         }
                     }
                 }
@@ -897,10 +863,6 @@ public class SQLConnector extends Singleton{
         }
 
         public static void addFlight(Flight newFlight){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             LocalDateTime departTime = newFlight.getDepartureDateTime();
             LocalDateTime arrriveTime = newFlight.getDepartureDateTime();
@@ -909,11 +871,11 @@ public class SQLConnector extends Singleton{
             String formattedArriveTime = arrriveTime.format(dateTimeFormatter);  
             String formattedDepartTime = departTime.format(dateTimeFormatter);
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 SQLInsertions.insertFlightData(connection, newFlight.getFlightNum(), newFlight.getPlane().getID(), 
-                                                findCrew(newFlight.getCrew().getPilot().getId()), formattedDepartTime,
-                                                formattedArriveTime, getDestinationId(newFlight.getOrigin().getAddress().getCity()),
-                                                getDestinationId(newFlight.getDestination().getAddress().getCity()));
+                                                newFlight.getCrew().getID(), formattedDepartTime,
+                                                formattedArriveTime, newFlight.getOrigin().getID(),
+                                                newFlight.getDestination().getID());
             }catch(SQLException e) {
                 e.printStackTrace();
             }finally {
@@ -931,13 +893,9 @@ public class SQLConnector extends Singleton{
 
         public static void removeFlight(int flightNumber){
             //deletes from db the flight
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "DELETE FROM Flight WHERE flightNumber = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, flightNumber);
@@ -966,24 +924,20 @@ public class SQLConnector extends Singleton{
         }
         
         public static void updateFlight(Flight updatedFlight){
-            //finds flight from flightNumber and updates it
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
+            //finds flight from flightNumber and updates it ----- ASSUMING ALL CURRENT ID's FOR ITS OBJECTS EXIST (PLANE, CREW, and AIRPORT ID's)
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String updateQuery = "UPDATE Flight SET plane_id=?, crew_id=?, " +
                                     "departureDateTime=?, arrivalDateTime=?, origin_id=?, destination_id=? " +
                                     "WHERE flightNumber=?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
                     preparedStatement.setInt(1, updatedFlight.getPlane().getID());
-                    preparedStatement.setInt(2, findCrew(updatedFlight.getCrew().getPilot().getId()));
+                    preparedStatement.setInt(2, updatedFlight.getCrew().getID());
                     preparedStatement.setTimestamp(3, Timestamp.valueOf(updatedFlight.getDepartureDateTime()));
                     preparedStatement.setTimestamp(4, Timestamp.valueOf(updatedFlight.getArrivalDateTime()));
-                    preparedStatement.setInt(5, getDestinationId(updatedFlight.getOrigin().getAddress().getCity()));
-                    preparedStatement.setInt(6, getDestinationId(updatedFlight.getDestination().getAddress().getCity()));
+                    preparedStatement.setInt(5, updatedFlight.getOrigin().getID());
+                    preparedStatement.setInt(6, updatedFlight.getDestination().getID());
                     preparedStatement.setInt(7, updatedFlight.getFlightNum());
                                         
                     preparedStatement.executeUpdate();
@@ -1006,13 +960,9 @@ public class SQLConnector extends Singleton{
 
         public static User getUser(int user_id){
             User retrieved_user = null;
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM User WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, user_id);
@@ -1021,8 +971,6 @@ public class SQLConnector extends Singleton{
                             Address address = makeAddress(user_id);
                             retrieved_user = new User(resultSet.getString("name"), address, resultSet.getString("username"), 
                                                     resultSet.getString("u_password"));
-                            
-                            
                         }
                     }
                 }
@@ -1043,16 +991,11 @@ public class SQLConnector extends Singleton{
         }
 
         public static void addTicket(Ticket ticket){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 SQLInsertions.insertTicketData(connection, null, ticket.getFlight().getFlightNum(), 
-                                                findSeat(ticket, ticket.getSeat()), ticket.getPrice(), null, false);
+                                                 ticket.getSeat().getID(), ticket.getPrice(), null, false);
             }catch (SQLException e) {
                 e.printStackTrace();
             }finally {
@@ -1069,14 +1012,9 @@ public class SQLConnector extends Singleton{
         }
 
         public static void updateTicket(Ticket ticket){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-            
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 SQLInsertions.insertCancellationInsuranceData(connection, ticket.getCancellationInsurance());
 
                 String query = "UPDATE Ticket SET cancellationInsurance_id = ?, sold = ? WHERE ticketHolderId = ?";
@@ -1104,14 +1042,10 @@ public class SQLConnector extends Singleton{
         }
 
         public static User login(String username, String U_password){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             User logginUser = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM User WHERE username = ? and u_password = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, username);
@@ -1139,18 +1073,18 @@ public class SQLConnector extends Singleton{
             }
             return logginUser;
         }
-
+        
         public static void addCustomer(Customer newCust){
             addUser(newCust);
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-
             try {
-                connection = createDatabaseConnection(host, user, password, database);
-                SQLInsertions.insertCustomerData(connection, newCust.getId(), null);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
+                if(newCust.getMembership()==null){
+                    SQLInsertions.insertCustomerData(connection, newCust.getId(), null);
+                }else{
+                    SQLInsertions.insertCustomerData(connection, newCust.getId(), newCust.getMembership().getID());
+                }
+                
             } catch (SQLException e) {
                 e.printStackTrace();
             }finally {
@@ -1168,14 +1102,9 @@ public class SQLConnector extends Singleton{
 
         public static ArrayList<Customer> getRegisteredUsers(){
             ArrayList<Customer> regCustomers = new ArrayList<>();
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
-
             try {
-                connection = createDatabaseConnection(host, user, password, database);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT User.*" +
                                 "FROM Customer" + 
                                 "JOIN User ON Customer.user_id = User.id" + 
@@ -1205,14 +1134,10 @@ public class SQLConnector extends Singleton{
         }
 
         public static void addReceipt(Receipt receipt){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
-                SQLInsertions.insertReceiptData(connection, receipt.getPurchaserID(), getTicketID(receipt.getTicket()), receipt.getDateTime().toString());
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
+                SQLInsertions.insertReceiptData(connection, receipt.getPurchaserID(), receipt.getTicket().getID(), receipt.getDateTime().toString());
             } catch (SQLException e) {
                 e.printStackTrace();
             }finally {
@@ -1229,14 +1154,10 @@ public class SQLConnector extends Singleton{
         }
 
         public static void addPayment(Payment payment){
-            String host = "localhost:3306";
-            String user = "root";
-            String password = "bio"; 
-            String database = "Flights";
             Connection connection = null;
             try {
-                connection = createDatabaseConnection(host, user, password, database);
-                SQLInsertions.insertPaymentData(connection, payment.getID(), 1, null, 0);
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
+                SQLInsertions.insertPaymentData(connection, payment.getID(), 1, payment.getReceipt().getID(), payment.getTicket().getID());
             } catch (SQLException e) {
                 e.printStackTrace();
             }finally {
