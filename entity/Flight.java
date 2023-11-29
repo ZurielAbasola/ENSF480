@@ -14,6 +14,7 @@ public class Flight {
 	private Airport origin;
 	private Airport destination;
     private Map<String, Ticket> tickets;
+    private float basePrice;
 
     //brand new flight with new tickets
 	public Flight(Plane plane, Crew crew, LocalDateTime departureDateTime,
@@ -26,6 +27,7 @@ public class Flight {
         this.arrivalDateTime = arrivalDateTime;
         this.origin = origin;
         this.destination = destination;
+        this.basePrice = basePrice;
     }
 
     //creating a flight for visual purposes on flight lookup with a specified flightnum and specified fields
@@ -39,6 +41,7 @@ public class Flight {
         this.origin = origin;
         this.destination = destination;
         this.tickets = makeTickets(basePrice);
+        this.basePrice = basePrice;
     }
 
     private Map<String, Ticket> makeTickets(float basePrice) {
@@ -120,5 +123,9 @@ public class Flight {
 
     public int getFlightNum(){
         return flightNumber;
+    }
+
+    public float getBasePrice(){
+        return basePrice;
     }
 }
