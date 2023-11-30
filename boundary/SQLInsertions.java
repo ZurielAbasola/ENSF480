@@ -285,27 +285,29 @@ public class SQLInsertions {
         }
     }
 
-    public static void insertPaymentMethodData(Connection connection, int methodId) {
-        try {
-            String query = "INSERT INTO PaymentMethod (id) VALUES (?)";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setInt(1, methodId);
+    // public static void insertPaymentMethodData(Connection connection, int methodId) {
 
-                int rowsAffected = preparedStatement.executeUpdate();
-                System.out.println(rowsAffected + " row(s) inserted into PaymentMethod table.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    //     PaymentMethod instanceof cred
+    //     try {
+    //         String query = "INSERT INTO PaymentMethod (id) VALUES (?)";
+    //         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+    //             preparedStatement.setInt(1, methodId);
 
-    public static void insertPaymentData(Connection connection, int paymentId, int methodId, Integer receiptId, int ticketId) {
+    //             int rowsAffected = preparedStatement.executeUpdate();
+    //             System.out.println(rowsAffected + " row(s) inserted into PaymentMethod table.");
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
+
+    public static void insertPaymentData(Connection connection, int paymentId, long methodId, Integer receiptId, int ticketId) {
         try {
-            String query = "INSERT INTO Payment (id, method_id, receipt_id, ticket_id) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO Payment (id, creditCard, receipt_id, ticket_id) VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
                 preparedStatement.setInt(1, paymentId);
-                preparedStatement.setInt(2, methodId);
+                preparedStatement.setLong(2, methodId);
                 if (receiptId != null) {
                     preparedStatement.setInt(3, receiptId);
                 } else {
@@ -382,12 +384,12 @@ public class SQLInsertions {
             insertTicketData(connection, null, 123456, 2, 100.0f, 2, false); //testing to see if ticketholderID can be null within ticket
             
             insertReceiptData(connection, 444444, 1, "2023-01-01 14:30:00");
-            insertPaymentMethodData(connection, 1);
-
-            //insertPaymentData(connection, 1, 1, 1, 1);
-            insertPaymentData(connection, 1, 1, null, 1);  //testing to see if receipt can be null
-
+            // insertPaymentMethodData(connection, 1);
             insertCreditCardData(connection, 1234567890123456L, 1225, 123);
+            //insertPaymentData(connection, 1, 1, 1, 1);
+            insertPaymentData(connection, 1, 1234567890123456L, null, 1);  //testing to see if receipt can be null
+
+            
 
         } catch (Exception e) {
                 e.printStackTrace();

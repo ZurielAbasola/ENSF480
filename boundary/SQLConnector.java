@@ -61,12 +61,14 @@ public class SQLConnector extends Singleton{
                 "username VARCHAR(255) UNIQUE NOT NULL, " +
                 "u_password VARCHAR(255) NOT NULL" +
             ");");
+
             createTable(connection, "CREATE TABLE IF NOT EXISTS Membership (" +
                 "mid INT PRIMARY KEY, " +
                 "date_registered DATE NOT NULL, " +
                 "expiry_date DATE NOT NULL, " +
                 "companion_ticket_used BOOLEAN NOT NULL" +
             ");");
+
             createTable(connection, "CREATE TABLE IF NOT EXISTS Admin (" +
                 "user_id INT PRIMARY KEY, " +
                 "FOREIGN KEY (user_id) REFERENCES User(id)" +
@@ -169,28 +171,22 @@ public class SQLConnector extends Singleton{
                 "dateTime DATETIME NOT NULL, " +
                 "FOREIGN KEY (ticket_id) REFERENCES Ticket(id)" +
             ");");
-
-            createTable(connection, "CREATE TABLE IF NOT EXISTS PaymentMethod (" +
-                "id INT PRIMARY KEY" +
-            ");");
-
-            createTable(connection, "CREATE TABLE IF NOT EXISTS Payment (" +
-                "id INT PRIMARY KEY, " +
-                "method_id INT, " +
-                "receipt_id INT, " +
-                "ticket_id INT, " +
-                "FOREIGN KEY (method_id) REFERENCES PaymentMethod(id), " +
-                "FOREIGN KEY (receipt_id) REFERENCES Receipt(id), " +
-                "FOREIGN KEY (ticket_id) REFERENCES Ticket(id)" +
-            ");");
-
             createTable(connection, "CREATE TABLE IF NOT EXISTS CreditCard (" +
                 "number BIGINT PRIMARY KEY, " +
                 "expiry INT NOT NULL, " +
                 "cvv INT NOT NULL" +
             ");");
 
-            
+            createTable(connection, "CREATE TABLE IF NOT EXISTS Payment (" +
+                "id INT PRIMARY KEY, " +
+                "creditCard BIGINT, " +
+                "receipt_id INT, " +
+                "ticket_id INT, " +
+                "FOREIGN KEY (creditCard) REFERENCES CreditCard(number), " +
+                "FOREIGN KEY (receipt_id) REFERENCES Receipt(id), " +
+                "FOREIGN KEY (ticket_id) REFERENCES Ticket(id)" +
+            ");");
+
             System.out.println("Tables created successfully");
             }catch (SQLException e) {
                 e.printStackTrace();
@@ -1158,7 +1154,7 @@ public class SQLConnector extends Singleton{
             Connection connection = null;
             try {
                 connection = createDatabaseConnection(HOST, USER, PASS, DB);
-                SQLInsertions.insertPaymentData(connection, payment.getID(), 1, payment.getReceipt().getID(), payment.getTicket().getID());
+                SQLInsertions.insertPaymentData(connection, payment.getID(), payment.getPMethod().getNumber(), payment.getReceipt().getID(), payment.getTicket().getID());
             } catch (SQLException e) {
                 e.printStackTrace();
             }finally {
