@@ -2,19 +2,19 @@ package entity;
 
 public class Payment {
     int id;
-	PaymentMethod method;
+	CreditCard card;
 	Receipt receipt = null;
 	Ticket ticket;
 
-	public Payment(PaymentMethod method, Receipt receipt, Ticket ticket) {
-        this.method = method;
+	public Payment(CreditCard card, Receipt receipt, Ticket ticket) {
+        this.card = card;
         this.receipt = receipt;
         this.ticket = ticket;
     }
 
-    public Payment(PaymentMethod method, Receipt receipt, Ticket ticket, int id) {
+    public Payment(CreditCard card, Receipt receipt, Ticket ticket, int id) {
         this.id = id;
-        this.method = method;
+        this.card = card;
         this.receipt = receipt;
         this.ticket = ticket;
     }
@@ -35,6 +35,8 @@ public class Payment {
         return ticket;
     }
 
-
+    public CreditCard getPMethod(){
+        return card;
+    }
 
 }

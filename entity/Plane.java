@@ -33,11 +33,6 @@ public class Plane {
             }
         }
     }
-
-    public Plane(int id, int numRows, int seatsPerRow, Map<String, Seat> seatsMap) {
-
-    }
-
     public Plane(int numRows) {
         this(numRows, 4);
     }
