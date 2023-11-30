@@ -3,9 +3,9 @@ package gui.components;
 
 import Models.ModelFlight;
 
-public class FormHome extends javax.swing.JPanel {
+public class FormUsers extends javax.swing.JPanel {
 
-    public FormHome() {
+    public FormUsers() {
         initComponents();
         setOpaque(false);
         table.addTableStyle(jScrollPane1);
@@ -13,9 +13,9 @@ public class FormHome extends javax.swing.JPanel {
     }
     
     private void initDataTable() {
-        table.addRow(new ModelFlight("1", "Calgary", "Edmonton", "YYC", "YEG", 5), false);
-        table.addRow(new ModelFlight("2", "Calgary", "Vancouver", "YYC", "YVR", 5), false);
-        table.addRow(new ModelFlight("3", "Calgary", "Toronto", "YYC", "YYZ", 5), false);
+        table.addRow(new ModelFlight("John Doe", "jd", "5-4658 Barter Street", "password123", "YEG", 5), false);
+        table.addRow(new ModelFlight("Walt White", "ww", "5-4658 Barter Street", "password123", "YEG", 5), false);
+        table.addRow(new ModelFlight("James Smith", "js", "5-4658 Barter Street", "password123", "YEG", 5), false);
     }
 
     @SuppressWarnings("unchecked")
@@ -33,17 +33,9 @@ public class FormHome extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Plane", "Origin", "Destination", "Departure", "Arrival", "Crew"
+                "Name", "Username", "Address", "Password"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        ));
         jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout roundPanel1Layout = new javax.swing.GroupLayout(roundPanel1);

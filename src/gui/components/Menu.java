@@ -43,9 +43,9 @@ public class Menu extends javax.swing.JPanel {
     public void initMenu(MenuEvent event) {
         this.event = event;
         addMenu("1", "Flights", 0);
-        addMenu("2", "Aircrafts", 1);
-        addMenu("3", "Crew", 2);
-        addMenu("4", "Users", 3);
+        addMenu("2", "Users", 1);
+        addMenu("3", "Aircrafts", 2);
+        addMenu("4", "Crew", 3);
         space();
         addMenu("key", "Logout", 4);
     }
@@ -104,9 +104,9 @@ public class Menu extends javax.swing.JPanel {
         jLabel1.setText("Dashboard");
         jLabel1.setToolTipText("");
 
-        scroll.setBackground(new java.awt.Color(204, 204, 204));
+        scroll.setBackground(new java.awt.Color(255, 255, 255));
 
-        panelMenu.setBackground(new java.awt.Color(204, 204, 204));
+        panelMenu.setBackground(new java.awt.Color(255, 255, 255));
         panelMenu.setOpaque(false);
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);

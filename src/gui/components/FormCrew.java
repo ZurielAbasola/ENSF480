@@ -3,9 +3,9 @@ package gui.components;
 
 import Models.ModelFlight;
 
-public class FormHome extends javax.swing.JPanel {
+public class FormCrew extends javax.swing.JPanel {
 
-    public FormHome() {
+    public FormCrew() {
         initComponents();
         setOpaque(false);
         table.addTableStyle(jScrollPane1);

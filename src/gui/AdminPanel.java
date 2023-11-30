@@ -4,7 +4,10 @@ import java.awt.Color;
 import gui.components.MenuEvent;
 import java.awt.Component;
 import gui.components.Form;
+import gui.components.FormAircrafts;
+import gui.components.FormCrew;
 import gui.components.FormHome;
+import gui.components.FormUsers;
 
 public class AdminPanel extends javax.swing.JFrame {
     public AdminPanel() {
@@ -13,10 +16,12 @@ public class AdminPanel extends javax.swing.JFrame {
         MenuEvent event = new MenuEvent() {
             @Override 
             public void menuSelected(int index) {
-                if(index==0) {
-                    showForm(new FormHome());
-                } else {
-                    showForm(new Form(index + ""));
+                switch (index) {
+                    case 0 -> showForm(new FormHome());
+                    case 1 -> showForm(new FormUsers());
+                    case 2 -> showForm(new FormAircrafts());
+                    case 3 -> showForm(new FormCrew());
+                    default -> showForm(new Form(index + ""));
                 }
                 System.out.println("Selected : " + index);
             }

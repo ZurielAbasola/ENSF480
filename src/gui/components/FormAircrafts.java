@@ -3,9 +3,9 @@ package gui.components;
 
 import Models.ModelFlight;
 
-public class FormHome extends javax.swing.JPanel {
+public class FormAircrafts extends javax.swing.JPanel {
 
-    public FormHome() {
+    public FormAircrafts() {
         initComponents();
         setOpaque(false);
         table.addTableStyle(jScrollPane1);
@@ -33,11 +33,11 @@ public class FormHome extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Plane", "Origin", "Destination", "Departure", "Arrival", "Crew"
+                "Name", "Seats"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
