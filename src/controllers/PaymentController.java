@@ -24,7 +24,7 @@ public class PaymentController extends Singleton {
 		ticket.setSold(true);
 		ticket.setCancellationInsurance(cancellationInsurance);
 		SQLConnector.updateTicket(ticket);
-		Receipt receipt = new Receipt(currentUser.getId(), ticket, LocalDateTime.now());
+		Receipt receipt = new Receipt(UserController.getInstance().currentUser.getId(), ticket, LocalDateTime.now());
 		SQLConnector.getInstance().addReceipt(receipt);
 		Payment payment = new Payment(creditCard, receipt, ticket);
 		SQLConnector.getInstance().addPayment(payment);

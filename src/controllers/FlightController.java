@@ -66,28 +66,28 @@ public class FlightController extends Singleton {
 	
 
 	// not sure we need these, and if we do, not sure we want them in here
-	public ArrayList<Plane> getPlanes() {
-		return SQLConnector.getInstance().getAllPlanes();
-	}
-	public Plane addPlane(int numRows, int seatsPerRow) {
-		Plane newPlane = new Plane(numRows, seatsPerRow);
-		SQLConnector.getInstance().addPlane(newPlane);
-		return newPlane;
-	}
+	// public ArrayList<Plane> getPlanes() {
+	// 	return SQLConnector.getInstance().getAllPlanes();
+	// }
+	// public Plane addPlane(int numRows, int seatsPerRow) {
+	// 	Plane newPlane = new Plane(numRows, seatsPerRow);
+	// 	SQLConnector.getInstance().addPlane(newPlane);
+	// 	return newPlane;
+	// }
 
-	public Plane addPlane(int numRows) {
-		Plane newPlane = new Plane(numRows);
-		SQLConnector.getInstance().addPlane(newPlane);
-		return newPlane;
-	}
+	// public Plane addPlane(int numRows) {
+	// 	Plane newPlane = new Plane(numRows);
+	// 	SQLConnector.getInstance().addPlane(newPlane);
+	// 	return newPlane;
+	// }
 
-	public Plane addPlane() {
-		Plane newPlane = new Plane();
-		SQLConnector.getInstance().addPlane(newPlane);
-		return newPlane;
-	}
+	// public Plane addPlane() {
+	// 	Plane newPlane = new Plane();
+	// 	SQLConnector.getInstance().addPlane(newPlane);
+	// 	return newPlane;
+	// }
 
-	public void removePlane(String planeId) {
-		SQLConnector.getInstance().removePlane(planeId);
-	}
+	// public void removePlane(String planeId) {
+	// 	SQLConnector.getInstance().removePlane(planeId);
+	// }
 }

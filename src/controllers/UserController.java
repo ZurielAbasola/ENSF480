@@ -44,7 +44,7 @@ public class UserController extends Singleton {
 		User loggedInUser = SQLConnector.getInstance().login(username, password);
 		if(loggedInUser != null) {
 			currentUser = loggedInUser;
-			return true
+			return true;
 		}
 		return false;
 	}
