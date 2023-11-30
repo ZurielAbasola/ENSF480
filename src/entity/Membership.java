@@ -1,3 +1,4 @@
+package src.entity;
 import java.time.LocalDate;
 
 public class Membership {
@@ -7,7 +8,8 @@ public class Membership {
 	private Boolean companionTicketUsed;
 
 	public Membership() {
-        this.id = "" + Math.rand() * 1000000; // will improve later
+		int num = (int) (Math.random() * 1000000);
+        this.id = num;
 		this.dateRegistered = LocalDate.now();
 		this.expiryDate = dateRegistered.plusYears(1);
 		companionTicketUsed = false;
@@ -20,5 +22,21 @@ public class Membership {
 			return true;
 		}
 		return false;
+	}
+
+	public int getID(){
+		return id;
+	}
+
+	public LocalDate getRegDate(){
+		return dateRegistered;
+	}
+
+	public LocalDate getExpDate(){
+		return expiryDate;
+	}
+
+	public Boolean getCompUsed(){
+		return companionTicketUsed;
 	}
 }

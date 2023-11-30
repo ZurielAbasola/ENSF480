@@ -1,11 +1,20 @@
+package src.entity;
 
 public class Payment {
-	PaymentMethod method;
+    int id;
+	CreditCard card;
 	Receipt receipt = null;
 	Ticket ticket;
 
-	public Payment(PaymentMethod method, Receipt receipt, Ticket ticket) {
-        this.method = method;
+	public Payment(CreditCard card, Receipt receipt, Ticket ticket) {
+        this.card = card;
+        this.receipt = receipt;
+        this.ticket = ticket;
+    }
+
+    public Payment(CreditCard card, Receipt receipt, Ticket ticket, int id) {
+        this.id = id;
+        this.card = card;
         this.receipt = receipt;
         this.ticket = ticket;
     }
@@ -17,4 +26,17 @@ public class Payment {
     public void setReceipt(Receipt receipt) {
     	this.receipt = receipt;
     }
+
+    public int getID(){
+        return id;
+    }
+
+    public Ticket getTicket(){
+        return ticket;
+    }
+
+    public CreditCard getPMethod(){
+        return card;
+    }
+
 }

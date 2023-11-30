@@ -1,4 +1,6 @@
+package src.entity;
 public class Airport {
+    private int id;
 	Address address;
 	String code;
 
@@ -24,4 +26,8 @@ public class Airport {
     public void setCode(String code) {
         this.code = code;
     }
+    
+    public int getID(){
+		return id;
+	}
 }

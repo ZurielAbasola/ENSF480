@@ -1,3 +1,4 @@
+package src.entity;
 public class Customer extends User {
 	private Membership membership = null;
 

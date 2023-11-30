@@ -1,5 +1,7 @@
+package src.utility;
+
 public class Singleton {
-	protected Singleton instance = null;
+	protected static Singleton instance = null;
 	protected Singleton() {}
 	public static Singleton getInstance() {
 		if(instance == null) {

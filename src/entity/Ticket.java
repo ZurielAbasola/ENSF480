@@ -1,12 +1,15 @@
+package src.entity;
 public class Ticket {
-    private int ticketHolderId = null;
+    private int id;
+    private Integer ticketHolderId = null;
     private Flight flight;
     private Seat seat;
     private float price; // maybe this should be part of the seat or the flight though
-    private CancellationInsurance calcellationInsurance;
+    private CancellationInsurance cancellationInsurance;
     private boolean sold;
 
-    public Ticket(Flight flight, Seat seat, float basePrice) {
+    public Ticket(int id, Flight flight, Seat seat, float basePrice) {
+        this.id = id;
         this.flight = flight;
         this.seat = seat;
         this.price = basePrice * seat.getPriceMultiplier();
@@ -14,17 +17,18 @@ public class Ticket {
         this.cancellationInsurance = null;
     }
 
-    public Ticket(Flight flight, Seat seat, float basePrice, int ticketHolderId) {
+    public Ticket(int id, Flight flight, Seat seat, float basePrice, Integer ticketHolderId) {
+        this.id = id;
         this.flight = flight;
         this.seat = seat;
         this.price = basePrice * seat.getPriceMultiplier();
         this.ticketHolderId = ticketHolderId;
-        this.sold = false;
+        this.sold = true;
         this.cancellationInsurance = null;
     }
 
-    public Ticket(Flight flight, Seat seat, float basePrice, int ticketHolderId, CancellationInsurance cancellationInsurance) {
-        this(flight, seat, basePrice, ticketHolderId);
+    public Ticket(int id, Flight flight, Seat seat, float basePrice, Integer ticketHolderId, CancellationInsurance cancellationInsurance) {
+        this(id, flight, seat, basePrice, ticketHolderId);
         this.cancellationInsurance = cancellationInsurance;
     }
 
@@ -70,11 +74,15 @@ public class Ticket {
         this.sold = sold;
     }
 
-    public String getTicketHolderId() {
+    public Integer getTicketHolderId() {
         return ticketHolderId;
     }
 
-    public void setTicketHolderId(String ticketHolderId) {
+    public void setTicketHolderId(Integer ticketHolderId) {
         this.ticketHolderId = ticketHolderId;
     }
+
+    public int getID(){
+		return id;
+	}
 }
