@@ -1170,6 +1170,40 @@ public class SQLConnector extends Singleton{
             }
         }
 
+        public static Customer getCustomer(int customer_id){
+            Connection connection = null;
+            Customer customer = null;
+            try {
+                connection = createDatabaseConnection(HOST, USER, PASS, DB);
+                String query = "SELECT User.*" +
+                                "FROM Customer" + 
+                                "JOIN User ON Customer.user_id = User.id" + 
+                                "WHERE Customer.user_id = ?";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    preparedStatement.setInt(1, customer_id);
+                    try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                        if (resultSet.next()) {
+                            customer = mapResultSetToCustomer(resultSet);
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }finally {
+                try {
+                // Close the connection in a finally block to ensure it's closed
+                    if (connection != null && !connection.isClosed()) {
+                        connection.close();
+                        System.out.println("Connection closed successfully");
+                    }
+                } catch (SQLException e) {
+                e.printStackTrace();
+                }
+            }
+
+            return customer;
+        }
+
 
         //Admin Features
     

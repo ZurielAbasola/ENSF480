@@ -1,4 +1,11 @@
+package src.controllers;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import src.boundary.*;
+import src.utility.*;
+import src.entity.*;
 
 public class UserController extends Singleton {
 	static User currentUser;
@@ -23,10 +30,10 @@ public class UserController extends Singleton {
 		return newCustomer;
 	}
 
-	public Customer registerExistingCustomer(String customerId, Membership membership) {
-		Customer customerToRegister = getCustomer(customerId);// needs to be implemented by boundary public class
+	public Customer registerExistingCustomer(int customerId, Membership membership) {
+		Customer customerToRegister = SQLConnector.getInstance().getCustomer(customerId);// needs to be implemented by boundary public class
 		customerToRegister.setMembership(membership);
-		SQLConnector.getInstance().updateCustomer(newCustomer);
+		SQLConnector.getInstance().updateCustomer(customerToRegister);
 		return customerToRegister;
 	}
 
