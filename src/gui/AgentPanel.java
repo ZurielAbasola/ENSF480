@@ -67,6 +67,8 @@ public class AgentPanel extends JFrame {
         passengers.add(new Customer("Tyler North", address1, "tylernorth00", "password1234"));
         passengers.add(new Customer("Tyler West", address2, "tylerwest00", "password12345"));
         passengers.add(new Customer("Tyler East", address3, "tylereast00", "password12346"));
+        // in connection we will use the below line to copy a passenger list of the chosen flight (flightID) to the ArrayList passengers
+        //passengers =  FlightController.getFlightPassengers(int flightNumber);
 
 
 
@@ -163,58 +165,67 @@ public class AgentPanel extends JFrame {
     }
 
     private void displayFlight(JPanel currentPanel) {
-        JTextArea flightDetails = new JTextArea("Flight number: AC575\nDeparting From: " + originAddress.getCity() + "\nDeparting at: " + LocalDateTime.now() + "\nArriving to: " + destAddress.getCity() + "\nArriving at: " + LocalDateTime.now().plusHours(2) + "\nPrice: " + price);
-        flightDetails.setEditable(false);
+        JPanel allFlightsPanel = new JPanel();
+        for (Flight flight : FlightController.getInstance().getFlights()) {
+            // Check if getOrigin or getDestination equals user input
+            if (flight.getOrigin().getCode().equals(userInput) || flight.getDestination().getCode().equals(userInput)) {
+                // Create a JTextLabel for the matching flight
+                JTextArea flightDetails = new JTextArea("Flight number: " + flight.getFlightNum()+"\nDeparting From: " + flight.getOrigin().getCode() + "\nDeparting at: " + flight.getDepartureDateTime() + "Arriving to: " + flight.getDestination().getCode() + "\nArriving at: " + flight.getArrivalDateTime() + "\nPrice: " + flight.getBasePrice());
+                flightDetails.setEditable(false);
 
-        JPanel TextPanel = new JPanel();
-        JButton selectSeatsButton = new JButton("Select Seats for flight");
-        JButton viewPassengersButton = new JButton("View Passengers!");
-        JButton cancelButton = new JButton("Return to main page");
-        selectSeatsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performSeatingMapFunctionality(currentPanel);
+                // Add the JTextLabel to the panel
+                allFlightsPanel.add(flightDetails);
+                JPanel TextPanel = new JPanel();
+                JButton selectSeatsButton = new JButton("Check Seats for flight");
+                JButton viewPassengersButton = new JButton("View Passengers!");
+                JButton cancelButton = new JButton("Return to main page");
+                selectSeatsButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        performSeatingMapFunctionality(currentPanel);
+
+                        revalidate();
+                        repaint();
+                    }
+                });
+                cancelButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new AgentPanel();
+                        dispose();
+
+                    }
+                });
+                viewPassengersButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        passengersTextArea.setText("Passenger Names:\n");
+                        for (Customer passenger : FlightController.getInstance().getFlightPassengers(flight)) {
+                            passengersTextArea.append(passenger.getName());
+                            passengersTextArea.append("\n");
+                        }
+                        passengersTextArea.setEditable(false);
+
+                        // Create a scrollable JTextArea and display it in a JFrame
+                        JScrollPane scrollPane = new JScrollPane(passengersTextArea);
+                        JFrame passengersFrame = new JFrame("Passenger List");
+                        passengersFrame.add(scrollPane);
+                        passengersFrame.setSize(400, 300);
+                        passengersFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                        passengersFrame.setVisible(true);
+                    }
+                });
+                TextPanel.add(flightDetails);
+                TextPanel.add(selectSeatsButton);
+                TextPanel.add(cancelButton);
+                TextPanel.add(viewPassengersButton);
+                currentPanel.add(TextPanel);
+
 
                 revalidate();
                 repaint();
-                }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new AgentPanel();
-                dispose();
-
             }
-        });
-        viewPassengersButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                passengersTextArea.setText("Passenger Names:\n");
-                for (Customer passenger : passengers) {
-                    passengersTextArea.append(passenger.getName());
-                    passengersTextArea.append("\n");
-                }
-                passengersTextArea.setEditable(false);
-
-                // Create a scrollable JTextArea and display it in a JFrame
-                JScrollPane scrollPane = new JScrollPane(passengersTextArea);
-                JFrame passengersFrame = new JFrame("Passenger List");
-                passengersFrame.add(scrollPane);
-                passengersFrame.setSize(400, 300);
-                passengersFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                passengersFrame.setVisible(true);
-            }
-        });
-        TextPanel.add(flightDetails);
-        TextPanel.add(selectSeatsButton);
-        TextPanel.add(cancelButton);
-        TextPanel.add(viewPassengersButton);
-        currentPanel.add(TextPanel);
-
-
-        revalidate();
-        repaint();
+        }
     }
 
     private ImageIcon resizeImageIcon(ImageIcon icon, int width, int height) {
