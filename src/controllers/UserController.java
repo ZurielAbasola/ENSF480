@@ -9,9 +9,13 @@ import src.entity.*;
 
 public class UserController extends Singleton {
 	static User currentUser;
+	static UserController instance = null;
 
 	public static UserController getInstance() {
-		return (UserController) Singleton.getInstance();
+		if(instance == null) {
+			instance = new UserController();
+		}
+		return instance;
 	}
 
 	public ArrayList<Customer> getRegisteredUsers() {

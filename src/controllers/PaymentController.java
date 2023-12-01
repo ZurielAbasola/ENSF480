@@ -8,9 +8,13 @@ import src.utility.*;
 import src.entity.*;
 
 public class PaymentController extends Singleton {
+	static PaymentController instance = null;
 
 	public static PaymentController getInstance() {
-		return (PaymentController) Singleton.getInstance();
+		if(instance == null) {
+			instance = new PaymentController();
+		}
+		return instance;
 	}
 
 	public Boolean makePayment(Ticket ticket, CreditCard creditCard, CancellationInsurance cancellationInsurance) {

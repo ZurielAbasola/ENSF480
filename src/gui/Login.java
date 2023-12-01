@@ -1,6 +1,8 @@
 package gui;
 
+import java.awt.Dimension;
 import javax.swing.JOptionPane;
+import src.controllers.UserController;
 
 public class Login extends javax.swing.JFrame {
     public Login() {
@@ -103,11 +105,11 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(passwordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(signInBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(createAccountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-                .addGap(169, 169, 169))
+                .addGap(163, 163, 163))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
                 .addComponent(image)
@@ -136,11 +138,11 @@ public class Login extends javax.swing.JFrame {
         String un = username.getText();
         String pw = password.getText();
         
-        // TODO: Check if un && pw is in the database
-        if (un.equals("John") && pw.equals("password")) {
-            //UserPanel main = new UserPanel();
-            //this.hide();
-            //main.setVisible(true);
+        if (UserController.getInstance().login(un, pw)) {
+            //JOptionPane.showMessageDialog(this, "Successfully logged in.");
+            AdminPanel main = new AdminPanel();
+            this.hide();
+            main.setVisible(true);
         }
         else 
         {
