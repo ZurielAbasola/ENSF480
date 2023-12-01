@@ -13,6 +13,12 @@ public class ProfilePage extends JFrame {
     private String destinationInput;
     private String originInput;
     private int price;
+    private String selectedLetter;
+    private int selectedNumber = 0;
+    private JPanel mainPanel = new JPanel();
+
+    private JFrame seatingMapFrame = new JFrame("App Name");
+
     public ProfilePage() {
 //        this.userController = user;
 
@@ -59,8 +65,6 @@ public class ProfilePage extends JFrame {
             });
             memberButtonsPanel.add(startMembershipButton);
             memberButtonsPanel.add(noMembershipButton);
-//            panel.add(startMembershipButton);
-//            panel.add(noMembershipButton);
             panel.add(memberButtonsPanel);
 
             noMembershipButton.addActionListener(new ActionListener() {
@@ -184,22 +188,20 @@ public class ProfilePage extends JFrame {
         selectSeatsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                currentPanel.removeAll(); //remove the search panel to show the seats panel
-                // Replace this with the logic of the Seat Map implementation in MainFrame
-                JLabel nameLabel = (new JLabel("Here will be the implementation of the seating map and choosing a seat\n"));
-                currentPanel.add(nameLabel);
+//                // logic of the Seat Map implementation
+                performSeatingMapFunctionality(currentPanel);
+
+                // Display the SeatingMap frame
+                // Retrieve the selected seat information from the SeatingMap
                 revalidate();
                 repaint();
-            }
+                }
         });
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new ProfilePage();
                 dispose();
-
-//                revalidate();
-//                repaint();
             }
         });
         TextPanel.add(flightDetails);
@@ -228,9 +230,6 @@ public class ProfilePage extends JFrame {
 
         JTextArea policyText = new JTextArea("       \t\tPOLICY          \n 1. Your membership is free and you will not be charged.\n 2. You agree to receiving emails from us that may be promotional.\n 3. A membership gives you benefits such as exclusive discounts.\n");
         policyText.setEditable(false);
-//        JScrollPane scrollPane = new JScrollPane(policyText);
-//
-//        panel.add(scrollPane);
 
         JPanel enrollPanel = new JPanel();
         JButton enrollButton = new JButton("Enroll");
@@ -238,9 +237,6 @@ public class ProfilePage extends JFrame {
         enrollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                panel.remove(policyText); // Clear the added components
-//                panel.remove(enrollButton); // Clear the added buttons
-//                panel.remove(cancelButton); // Clear the added buttons
                 panel.remove(enrollPanel);
                 // Replace this with your actual logic to generate and store the membership ID
                 currentCustomer.setMembership(new Membership());
@@ -255,20 +251,13 @@ public class ProfilePage extends JFrame {
         });
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                panel.remove(policyText); // Clear the added components
-//                panel.remove(enrollButton); // Clear the added buttons
-//                panel.remove(cancelButton); // Clear the added buttons
                 panel.remove(enrollPanel);
-//                panel.add(membershipButton); //prompt user again
-//                panel.add(noButton); //prompt user again
                 panel.add(membersPanel);
 
                 revalidate();
                 repaint();
             }
         });
-//        panel.add(enrollButton);
-//        panel.add(cancelButton);
         enrollPanel.add(policyText);
         enrollPanel.add(enrollButton);
         enrollPanel.add(cancelButton);
@@ -277,6 +266,113 @@ public class ProfilePage extends JFrame {
 
         revalidate();
         repaint();
+    }
+    private void performSeatingMapFunctionality(JPanel currentPanel) {
+        // Encapsulated functionality from SeatingMap
+        JButton btn = new JButton("View Seating Map");
+        JButton submitButton = new JButton("Submit");
+        JTextArea textArea = new JTextArea();
+        JPanel initialView = new JPanel();
+        JPanel imageAndSelectionView = new JPanel();
+        JLabel imageLabel = new JLabel();
+        JComboBox<Integer> numberDropdown = new JComboBox<>(createNumberArray());
+        JComboBox<String> menuDropdown = new JComboBox<>(createLetterArray());
+        JLabel selectionLabel = new JLabel("Your selected seat: ");
+        currentPanel.add(mainPanel);
+        // Set layout for the main panel
+        mainPanel.setLayout(new CardLayout());
+
+        // Set layout for initial view
+        initialView.setLayout(new BorderLayout());
+        btn.setPreferredSize(new Dimension(200, 50));
+        initialView.add(btn, BorderLayout.CENTER);
+
+        // Set layout for image and selection view
+        imageAndSelectionView.setLayout(new BorderLayout());
+        imageAndSelectionView.add(imageLabel, BorderLayout.CENTER);
+
+        // Create a sub-panel for the number and letter dropdowns, submit button, and selection label
+        JPanel subPanel = new JPanel(new FlowLayout());
+        subPanel.add(numberDropdown);
+        subPanel.add(menuDropdown);
+        subPanel.add(submitButton);
+        subPanel.add(selectionLabel);
+
+        // Add the sub-panel to the image and selection view
+        imageAndSelectionView.add(subPanel, BorderLayout.SOUTH);
+
+        // Add views to the main panel
+        mainPanel.add(initialView, "initial");
+        mainPanel.add(imageAndSelectionView, "imageAndSelection");
+
+        // Set frame properties
+        seatingMapFrame.getContentPane().add(mainPanel);
+        seatingMapFrame.setSize(1080, 720);
+        seatingMapFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        seatingMapFrame.setVisible(true);
+
+        // Add action listeners
+        btn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showImage(imageLabel, mainPanel);
+                subPanel.setVisible(true);
+                switchView(mainPanel, "imageAndSelection");
+            }
+        });
+
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                submitAction(imageAndSelectionView, menuDropdown, numberDropdown, selectionLabel);
+            }
+        });
+        revalidate();
+        repaint();
+    }
+    private void switchView(JPanel mainPanel, String viewName) {
+        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
+        cardLayout.show(mainPanel, viewName);
+    }
+
+    // Method to show the image
+    private void showImage(JLabel imageLabel, JPanel mainPanel) {
+        ImageIcon icon = new ImageIcon("SeatingMap.jpg");
+        Image image = icon.getImage().getScaledInstance(mainPanel.getWidth() - 100, mainPanel.getHeight() - 120, Image.SCALE_SMOOTH);
+        imageLabel.setIcon(new ImageIcon(image));
+    }
+
+    // Method to perform the action when the submit button is clicked
+    private void submitAction(JPanel panel, JComboBox<String> menuDropdown, JComboBox<Integer> numberDropdown, JLabel selectionLabel) {
+        selectedLetter = (String) menuDropdown.getSelectedItem();
+        selectedNumber = (Integer) numberDropdown.getSelectedItem();
+        String result = selectedNumber + selectedLetter;
+        if ((selectedLetter.equals("C") || selectedLetter.equals("D")) && (selectedNumber == 1 || selectedNumber == 2 || selectedNumber == 3)) {
+            JOptionPane.showMessageDialog(null, "Please select a valid seat");
+        } else {
+            JOptionPane.showMessageDialog(null, "You selected seat: " + result);
+            selectionLabel.setText("Your selection: " + result);
+            panel.setVisible(false);
+        }
+        //currentPanel.remove(mainPanel);
+        seatingMapFrame.setVisible(false);
+    }
+
+    private Integer[] createNumberArray() {
+        Integer[] numbers = new Integer[20];
+        for (int i = 0; i < 20; i++) {
+            numbers[i] = i + 1;
+        }
+        return numbers;
+    }
+
+    // Helper method to create an array of numbers from 1 to 20
+    private String[] createLetterArray() {
+        String[] choices = new String[]{"A", "B", "C", "D", "E", "F"};
+        for (int i = 0; i < 6; i++) {
+            choices[i] = Character.toString((char) ('A' + i));
+        }
+        return choices;
     }
 
 
