@@ -8,9 +8,13 @@ import src.utility.*;
 import src.entity.*;
 
 public class FlightController extends Singleton {
+	static FlightController instance = null;
 
 	public static FlightController getInstance() {
-		return (FlightController) Singleton.getInstance();
+		if(instance == null) {
+			instance = new FlightController();
+		}
+		return instance;
 	}
 
 	public ArrayList<Flight> getFlights() {

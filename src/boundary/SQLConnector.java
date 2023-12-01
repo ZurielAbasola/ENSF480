@@ -17,8 +17,13 @@ public class SQLConnector extends Singleton{
 
     private static final String DB_URL_PREFIX = "jdbc:mysql://";
 
+    static SQLConnector instance = null;
+
     public static SQLConnector getInstance() {
-		return (SQLConnector) Singleton.getInstance();
+		if(instance == null) {
+			instance = new SQLConnector();
+		}
+		return instance;
 	}
 
     // Function to create a server connection and DB
@@ -1046,7 +1051,7 @@ public class SQLConnector extends Singleton{
                 String query = "SELECT * FROM User WHERE username = ? and u_password = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, username);
-                    preparedStatement.setString(1, U_password);
+                    preparedStatement.setString(2, U_password);
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         if (resultSet.next()) {
                             Address address = makeAddress(resultSet.getInt("id"));

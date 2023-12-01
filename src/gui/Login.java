@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.JOptionPane;
+import src.controllers.UserController;
 
 public class Login extends javax.swing.JFrame {
     public Login() {
@@ -136,11 +137,11 @@ public class Login extends javax.swing.JFrame {
         String un = username.getText();
         String pw = password.getText();
         
-        // TODO: Check if un && pw is in the database
-        if (un.equals("John") && pw.equals("password")) {
-            //UserPanel main = new UserPanel();
-            //this.hide();
-            //main.setVisible(true);
+        if (UserController.getInstance().login(un, pw)) {
+            //JOptionPane.showMessageDialog(this, "Successfully logged in.");
+            AdminPanel main = new AdminPanel();
+            this.hide();
+            main.setVisible(true);
         }
         else 
         {
