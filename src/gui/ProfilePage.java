@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.*;
+//import SeatingMap;
 
 public class ProfilePage extends JFrame {
 //    private UserController userController;
@@ -16,7 +17,7 @@ public class ProfilePage extends JFrame {
     private String selectedLetter;
     private int selectedNumber = 0;
     private JPanel mainPanel = new JPanel();
-    private JPanel panel = = new JPanel(new GridLayout(5,2));
+
     private JFrame seatingMapFrame = new JFrame("App Name");
 
     public ProfilePage() {
@@ -33,6 +34,8 @@ public class ProfilePage extends JFrame {
 
         // Header
 
+
+        JPanel panel = new JPanel(new GridLayout(5,2));
         ImageIcon headerIcon = resizeImageIcon( new ImageIcon("headerImage.jpg"), 1280, 300); // Header image
         JLabel headerLabel = new JLabel(headerIcon);
         panel.add(headerLabel);
@@ -63,6 +66,8 @@ public class ProfilePage extends JFrame {
             });
             memberButtonsPanel.add(startMembershipButton);
             memberButtonsPanel.add(noMembershipButton);
+//            panel.add(startMembershipButton);
+//            panel.add(noMembershipButton);
             panel.add(memberButtonsPanel);
 
             noMembershipButton.addActionListener(new ActionListener() {
@@ -177,37 +182,49 @@ public class ProfilePage extends JFrame {
     }
 
     private void displayFlight(JPanel currentPanel) {
-        JTextArea flightDetails = new JTextArea("Flight number: AC575\nDeparting From: " + originInput + "\nDeparting at: " + LocalDateTime.now() + "Arriving to: " + destinationInput + "\nArriving at: " + LocalDateTime.now().plusHours(2) + "\nPrice: " + price);
-        flightDetails.setEditable(false);
+        JPanel allFlightsPanel = new JPanel();
+        for (Flight flight : FlightController.getInstance().getFlights()) {
+            // Check if getOrigin or getDestination equals user input
+            if (flight.getOrigin().getCode().equals(userInput) || flight.getDestination().getCode().equals(userInput)) {
+                // Create a JTextLabel for the matching flight
+                JTextArea flightDetails = new JTextArea("Flight number: " + flight.getFlightNum()+"\nDeparting From: " + flight.getOrigin().getCode() + "\nDeparting at: " + flight.getDepartureDateTime() + "Arriving to: " + flight.getDestination().getCode() + "\nArriving at: " + flight.getArrivalDateTime() + "\nPrice: " + flight.getBasePrice());
+                flightDetails.setEditable(false);
 
-        JPanel TextPanel = new JPanel();
-        JButton selectSeatsButton = new JButton("Select Seats for flight");
-        JButton cancelButton = new JButton("Return to main page");
-        selectSeatsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-//                // logic of the Seat Map implementation
-                performSeatingMapFunctionality(currentPanel);
+                // Add the JTextLabel to the panel
+                allFlightsPanel.add(flightDetails);
 
-                // Display the SeatingMap frame
-                // Retrieve the selected seat information from the SeatingMap
+                JPanel TextPanel = new JPanel();
+                JButton selectSeatsButton = new JButton("Select Seats for flight");
+                JButton cancelButton = new JButton("Return to main page");
+                selectSeatsButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        performSeatingMapFunctionality(currentPanel);
+
+                        revalidate();
+                        repaint();
+                    }
+                });
+                cancelButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        new ProfilePage();
+                        dispose();
+
+                    }
+                });
+                TextPanel.add(allFlightsPanel);
+                TextPanel.add(selectSeatsButton);
+                TextPanel.add(cancelButton);
+                currentPanel.add(TextPanel);
+
+
                 revalidate();
                 repaint();
-                }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ProfilePage();
-                dispose();
             }
-        });
-        TextPanel.add(flightDetails);
-        TextPanel.add(selectSeatsButton);
-        TextPanel.add(cancelButton);
-        currentPanel.add(TextPanel);
-
-
+        }
+//        JTextArea flightDetails = new JTextArea("Flight number: AC575\nDeparting From: " + originInput + "\nDeparting at: " + LocalDateTime.now() + "Arriving to: " + destinationInput + "\nArriving at: " + LocalDateTime.now().plusHours(2) + "\nPrice: " + price);
+//        flightDetails.setEditable(false);
         revalidate();
         repaint();
     }
@@ -228,6 +245,9 @@ public class ProfilePage extends JFrame {
 
         JTextArea policyText = new JTextArea("       \t\tPOLICY          \n 1. Your membership is free and you will not be charged.\n 2. You agree to receiving emails from us that may be promotional.\n 3. A membership gives you benefits such as exclusive discounts.\n");
         policyText.setEditable(false);
+//        JScrollPane scrollPane = new JScrollPane(policyText);
+//
+//        panel.add(scrollPane);
 
         JPanel enrollPanel = new JPanel();
         JButton enrollButton = new JButton("Enroll");
@@ -235,6 +255,9 @@ public class ProfilePage extends JFrame {
         enrollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+//                panel.remove(policyText); // Clear the added components
+//                panel.remove(enrollButton); // Clear the added buttons
+//                panel.remove(cancelButton); // Clear the added buttons
                 panel.remove(enrollPanel);
                 // Replace this with your actual logic to generate and store the membership ID
                 currentCustomer.setMembership(new Membership());
@@ -249,13 +272,20 @@ public class ProfilePage extends JFrame {
         });
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+//                panel.remove(policyText); // Clear the added components
+//                panel.remove(enrollButton); // Clear the added buttons
+//                panel.remove(cancelButton); // Clear the added buttons
                 panel.remove(enrollPanel);
+//                panel.add(membershipButton); //prompt user again
+//                panel.add(noButton); //prompt user again
                 panel.add(membersPanel);
 
                 revalidate();
                 repaint();
             }
         });
+//        panel.add(enrollButton);
+//        panel.add(cancelButton);
         enrollPanel.add(policyText);
         enrollPanel.add(enrollButton);
         enrollPanel.add(cancelButton);
