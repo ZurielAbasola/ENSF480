@@ -139,7 +139,7 @@ public class ProfilePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(panel);
-                JLabel nameLabel = (new JLabel("You can search for a flight by typing a destination or a origin or both!\n"));
+                JLabel nameLabel = (new JLabel("You can search for a flight by typing a destination or a origin or both!\nPlease use the code of the desired airport, e.g. if your desired origin is Calgary, please type YYC, if it's Edmonton, type YEG, etc.\n"));
                 flightPanel.add(nameLabel);
                 flightPanel.add(searchByPanel);
                 flightPanel.remove(bookFlightButton);
