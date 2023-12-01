@@ -68,7 +68,7 @@ public class AgentPanel extends JFrame {
         passengers.add(new Customer("Tyler West", address2, "tylerwest00", "password12345"));
         passengers.add(new Customer("Tyler East", address3, "tylereast00", "password12346"));
         // in connection we will use the below line to copy a passenger list of the chosen flight (flightID) to the ArrayList passengers
-        //passengers =  FlightController.getFlightPassengers(int flightNumber);
+        // which is implemented in the displayFlight method below.
 
 
 
@@ -122,8 +122,7 @@ public class AgentPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(panel);
-                JLabel nameLabel = (new JLabel("You can search for a flight by typing a destination or a origin or both!\n"));
-                flightPanel.add(nameLabel);
+                JLabel nameLabel = (new JLabel("You can search for a flight by typing a destination or a origin or both!\nPlease use the code of the desired airport, e.g. if your desired origin is Calgary, please type YYC, if it's Edmonton, type YEG, etc.\n"));                flightPanel.add(nameLabel);
                 flightPanel.add(searchByPanel);
                 flightPanel.remove(bookFlightButton);
                 add(flightPanel);
