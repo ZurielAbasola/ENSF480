@@ -16,7 +16,7 @@ public class ProfilePage extends JFrame {
     private String selectedLetter;
     private int selectedNumber = 0;
     private JPanel mainPanel = new JPanel();
-
+    private JPanel panel = = new JPanel(new GridLayout(5,2));
     private JFrame seatingMapFrame = new JFrame("App Name");
 
     public ProfilePage() {
@@ -33,8 +33,6 @@ public class ProfilePage extends JFrame {
 
         // Header
 
-
-        JPanel panel = new JPanel(new GridLayout(5,2));
         ImageIcon headerIcon = resizeImageIcon( new ImageIcon("headerImage.jpg"), 1280, 300); // Header image
         JLabel headerLabel = new JLabel(headerIcon);
         panel.add(headerLabel);
