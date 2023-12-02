@@ -1,3 +1,5 @@
+package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,6 +8,9 @@ import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.*;
+
+import src.controllers.*;
+import src.entity.*;
 //import SeatingMap;
 
 public class ProfilePage extends JFrame {
@@ -185,7 +190,7 @@ public class ProfilePage extends JFrame {
         JPanel allFlightsPanel = new JPanel();
         for (Flight flight : FlightController.getInstance().getFlights()) {
             // Check if getOrigin or getDestination equals user input
-            if (flight.getOrigin().getCode().equals(userInput) || flight.getDestination().getCode().equals(userInput)) {
+            if (flight.getOrigin().getCode().equals(originInput) || flight.getDestination().getCode().equals(destinationInput)) {
                 // Create a JTextLabel for the matching flight
                 JTextArea flightDetails = new JTextArea("Flight number: " + flight.getFlightNum()+"\nDeparting From: " + flight.getOrigin().getCode() + "\nDeparting at: " + flight.getDepartureDateTime() + "Arriving to: " + flight.getDestination().getCode() + "\nArriving at: " + flight.getArrivalDateTime() + "\nPrice: " + flight.getBasePrice());
                 flightDetails.setEditable(false);

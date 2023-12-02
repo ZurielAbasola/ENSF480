@@ -140,7 +140,7 @@ public class Login extends javax.swing.JFrame {
         
         if (UserController.getInstance().login(un, pw)) {
             //JOptionPane.showMessageDialog(this, "Successfully logged in.");
-            AdminPanel main = new AdminPanel();
+            ProfilePage main = new ProfilePage();
             this.hide();
             main.setVisible(true);
         }
