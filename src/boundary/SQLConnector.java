@@ -17,9 +17,13 @@ public class SQLConnector extends Singleton{
     public final static String DB = "Flights";
 
     private static final String DB_URL_PREFIX = "jdbc:mysql://";
-
+	
+    static SQLConnector instance = null;
     public static SQLConnector getInstance() {
-		return (SQLConnector) Singleton.getInstance();
+		if(instance == null) {
+			instance = new SQLConnector();
+		}
+		return instance;
 	}
 
     // Function to create a server connection and DB
