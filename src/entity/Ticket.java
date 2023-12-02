@@ -2,24 +2,24 @@ package src.entity;
 public class Ticket {
     private int id;
     private Integer ticketHolderId = null;
-    private Flight flight;
+    private int flightNum;
     private Seat seat;
     private float price; // maybe this should be part of the seat or the flight though
     private CancellationInsurance cancellationInsurance;
     private boolean sold;
 
-    public Ticket(int id, Flight flight, Seat seat, float basePrice) {
+    public Ticket(int id, int flightNum, Seat seat, float basePrice) {
         this.id = id;
-        this.flight = flight;
+        this.flightNum = flightNum;
         this.seat = seat;
         this.price = basePrice * seat.getPriceMultiplier();
         this.sold = false;
         this.cancellationInsurance = null;
     }
 
-    public Ticket(int id, Flight flight, Seat seat, float basePrice, Integer ticketHolderId) {
+    public Ticket(int id, int flightNum, Seat seat, float basePrice, Integer ticketHolderId) {
         this.id = id;
-        this.flight = flight;
+        this.flightNum = flightNum;
         this.seat = seat;
         this.price = basePrice * seat.getPriceMultiplier();
         this.ticketHolderId = ticketHolderId;
@@ -27,19 +27,19 @@ public class Ticket {
         this.cancellationInsurance = null;
     }
 
-    public Ticket(int id, Flight flight, Seat seat, float basePrice, Integer ticketHolderId, CancellationInsurance cancellationInsurance) {
-        this(id, flight, seat, basePrice, ticketHolderId);
+    public Ticket(int id, int flightNum, Seat seat, float basePrice, Integer ticketHolderId, CancellationInsurance cancellationInsurance) {
+        this(id, flightNum, seat, basePrice, ticketHolderId);
         this.cancellationInsurance = cancellationInsurance;
     }
 
     // getters and setters
 
-    public Flight getFlight() {
-        return flight;
+    public int getFlight() {
+        return flightNum;
     }
 
-    public void setFlight(Flight flight) {
-        this.flight = flight;
+    public void setFlight(int flight) {
+        this.flightNum = flight;
     }
 
     public Seat getSeat() {
