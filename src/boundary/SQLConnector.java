@@ -470,7 +470,7 @@ public class SQLConnector extends Singleton{
                 connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM FlightAttendant WHERE crew_id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setInt(2, crew_id);
+                    preparedStatement.setInt(1, crew_id);
                     
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         while (resultSet.next()) {
