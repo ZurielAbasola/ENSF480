@@ -224,8 +224,9 @@ public class SQLConnector extends Singleton{
                         while (resultSet.next()) {
                             String location = resultSet.getString("location");
                             float multi = resultSet.getFloat("priceMultiplier");
+                            int id = resultSet.getInt("id");
 
-                            Plane.setSeatFromSql(location, multi, seatMap);
+                            Plane.setSeatFromSql(location, multi, seatMap, id);
                         }
                     }
                 }
