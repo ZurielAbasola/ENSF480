@@ -342,7 +342,7 @@ public class SQLInsertions {
     public static void testInsertions(){
         String host = "localhost:3306";
         String user = "root";
-        String password = "bio";
+        String password = "Mysql1969?";
         String database = "Flights";
         Connection connection = null;
 
