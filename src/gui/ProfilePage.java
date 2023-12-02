@@ -1,4 +1,5 @@
 package gui;
+package gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,8 +12,12 @@ import java.util.*;
 
 import src.controllers.*;
 import src.entity.*;
+import src.entity.Crew;
+import src.entity.Plane;
+//import SeatingMap;
 
 public class ProfilePage extends JFrame {
+    //    private UserController userController;
     private Customer currentCustomer;
     private String destinationInput;
     private String originInput;
@@ -20,10 +25,23 @@ public class ProfilePage extends JFrame {
     private String selectedLetter;
     private int selectedNumber = 0;
     private JPanel mainPanel = new JPanel();
+    private ArrayList<Flight> testArrayFlights = new ArrayList<>();
+    private int flightNumberFlights = 0;
+    private Plane planeFlights;
+    private Crew crewFlights;
+    private LocalDateTime departureDateTimeFlights;
+    private LocalDateTime arrivalDateTimeFlights;
+    private Airport originFlights;
+    private Airport destinationFlights;
+    private Map<String, Ticket> ticketsFlights;
+    private float basePriceFlights;
+
+
 
     private JFrame seatingMapFrame = new JFrame("App Name");
 
     public ProfilePage() {
+//        this.userController = user;
 
         setTitle("User Profile");
         setSize(1280, 720);
@@ -68,6 +86,8 @@ public class ProfilePage extends JFrame {
             });
             memberButtonsPanel.add(startMembershipButton);
             memberButtonsPanel.add(noMembershipButton);
+//            panel.add(startMembershipButton);
+//            panel.add(noMembershipButton);
             panel.add(memberButtonsPanel);
 
             noMembershipButton.addActionListener(new ActionListener() {
@@ -89,7 +109,7 @@ public class ProfilePage extends JFrame {
         //Plane plane = new Plane(); /* initialize Plane */
 
         ArrayList<FlightAttendant> flightAttendants = new ArrayList<>();
-        Pilot pilot = new Pilot("Johnathan Smith", address, "johnsmith01", "password1234");;
+        Pilot pilot = new Pilot("Johnathan Smith", address, "johnsmith01", "password1234");
 
         // Create a Crew
         Crew crew = new Crew(pilot, flightAttendants);// initialize Crew
@@ -104,6 +124,7 @@ public class ProfilePage extends JFrame {
         // Set departure and arrival times
         LocalDateTime departureDateTime = LocalDateTime.now();
         LocalDateTime arrivalDateTime = departureDateTime.plusHours(2);
+
 
         // Create a Flight object
         price = 200;
@@ -120,6 +141,17 @@ public class ProfilePage extends JFrame {
 //        boolean isSeatAvailable = flight.isSeatAvailable();/* provide seat location */
 //        double flightNumber = flight.getFlightNumber();
 //
+        //int flightNumberFlights = 23;
+        Plane planeFlights = new Plane(36, 6);
+        Crew crewFlights = new Crew();
+        LocalDateTime departureDateTimeFlights = LocalDateTime.now();
+        LocalDateTime arrivalDateTimeFlights = LocalDateTime.now().plusHours(4);
+        Airport originFlights = new Airport(originAddress);
+        Airport destinationFlights = new Airport(destAddress);
+        float basePriceFlights = 300;
+        for (int i = 0; i < 10; i++){
+            testArrayFlights.add(new Flight(planeFlights, crewFlights, departureDateTimeFlights, arrivalDateTimeFlights, originFlights, destinationFlights, basePriceFlights))
+        }
 
 
         flightPanel.add(bookFlightButton);
@@ -183,7 +215,8 @@ public class ProfilePage extends JFrame {
 
     private void displayFlight(JPanel currentPanel) {
         JPanel allFlightsPanel = new JPanel();
-        for (Flight flight : FlightController.getInstance().getFlights()) {
+//        for (Flight flight : FlightController.getInstance().getFlights()) {
+        for (Flight flight : testArrayFlights) {
             // Check if getOrigin or getDestination equals user input
             if (flight.getOrigin().getCode().equals(originInput) || flight.getDestination().getCode().equals(destinationInput)) {
                 // Create a JTextLabel for the matching flight
