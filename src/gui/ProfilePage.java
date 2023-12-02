@@ -30,7 +30,7 @@ public class ProfilePage extends JFrame {
     private LocalDateTime arrivalDateTimeFlights;
     private Airport originFlights;
     private Airport destinationFlights;
-    private Map<String, Ticket> ticketsFlights;
+    private ArrayList<Flight> testArrayFlightAttendants = new ArrayList<>();
     private float basePriceFlights;
 
 
@@ -49,13 +49,10 @@ public class ProfilePage extends JFrame {
     private void initComponents() {
 
         // Header
-
-
         JPanel panel = new JPanel(new GridLayout(5,2));
         ImageIcon headerIcon = resizeImageIcon( new ImageIcon("headerImage.jpg"), 1280, 300); // Header image
         JLabel headerLabel = new JLabel(headerIcon);
         panel.add(headerLabel);
-        // Footer
 
         //SHOULD BE CHANGED TO GETCUSTOMER() FUNCTIONALITY
         Address address = new Address("55th", "Calgary", "Alberta", "Canada", "90210");
@@ -136,8 +133,12 @@ public class ProfilePage extends JFrame {
 //        double flightNumber = flight.getFlightNumber();
 //
         //int flightNumberFlights = 23;
+        for (int i = 0; i < 10; i++){
+            testArrayFlightAttendants.add(new FlightAttendant("Johnathan Smith", address, "johnsmith01", "password1234"))
+        }
+
         Plane planeFlights = new Plane(36, 6);
-        Crew crewFlights = new Crew();
+        Crew crewFlights = new Crew(pilot, );
         LocalDateTime departureDateTimeFlights = LocalDateTime.now();
         LocalDateTime arrivalDateTimeFlights = LocalDateTime.now().plusHours(4);
         Airport originFlights = new Airport(originAddress);
@@ -392,6 +393,7 @@ public class ProfilePage extends JFrame {
             selectionLabel.setText("Your selection: " + result);
             panel.setVisible(false);
         }
+        //currentPanel.remove(mainPanel);
         seatingMapFrame.setVisible(false);
     }
 
