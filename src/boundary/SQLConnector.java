@@ -13,7 +13,7 @@ import src.utility.*;
 public class SQLConnector extends Singleton{
     public final static String HOST = "localhost:3306";
     public final static String USER = "root";
-    public final static String PASS = "bio"; 
+    public final static String PASS = "Mysql1969?"; 
     public final static String DB = "Flights";
 
     private static final String DB_URL_PREFIX = "jdbc:mysql://";
