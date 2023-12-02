@@ -14,10 +14,8 @@ import src.controllers.*;
 import src.entity.*;
 import src.entity.Crew;
 import src.entity.Plane;
-//import SeatingMap;
 
 public class ProfilePage extends JFrame {
-    //    private UserController userController;
     private Customer currentCustomer;
     private String destinationInput;
     private String originInput;
@@ -41,7 +39,6 @@ public class ProfilePage extends JFrame {
     private JFrame seatingMapFrame = new JFrame("App Name");
 
     public ProfilePage() {
-//        this.userController = user;
 
         setTitle("User Profile");
         setSize(1280, 720);
@@ -86,8 +83,6 @@ public class ProfilePage extends JFrame {
             });
             memberButtonsPanel.add(startMembershipButton);
             memberButtonsPanel.add(noMembershipButton);
-//            panel.add(startMembershipButton);
-//            panel.add(noMembershipButton);
             panel.add(memberButtonsPanel);
 
             noMembershipButton.addActionListener(new ActionListener() {
@@ -398,7 +393,6 @@ public class ProfilePage extends JFrame {
             selectionLabel.setText("Your selection: " + result);
             panel.setVisible(false);
         }
-        //currentPanel.remove(mainPanel);
         seatingMapFrame.setVisible(false);
     }
 
