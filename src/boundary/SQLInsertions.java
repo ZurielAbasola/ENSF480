@@ -178,8 +178,6 @@ public class SQLInsertions {
         }
     }
 
-    
-
     public static void insertCrewData(Connection connection, int crewId, Integer pilotId) {
         try {
             String query = "INSERT INTO Crew (id, pilot_id) VALUES (?, ?)";
@@ -372,8 +370,10 @@ public class SQLInsertions {
             insertAirportData(connection, 1, "1 Airport Ave", "Vancouver", "CA", "Canada", "52467", "YYV");
             insertAirportData(connection, 2, "31 Airport Ave", "Calgary", "CA", "Canada", "52467", "YYC");
             insertPlaneData(connection, 1, 1, 2);
+
             insertSeatData(connection, 1, "0A", 1.35f, 1);
-            insertSeatData(connection, 2,  "0B", 1.35f, 1);
+            insertSeatData(connection,2,  "0B", 1.35f, 1);
+
             insertCrewData(connection, 1, 111111);
             insertFlightAttendantData(connection, 666666, 1);
             insertFlightData(connection, 123456, 1, 1, "2023-01-01 12:00:00", "2023-01-01 15:00:00", 1, 2, 25.0f);
@@ -409,6 +409,6 @@ public class SQLInsertions {
     }
 
     public static void main(String[] args) {
-         testInsertions();
+        testInsertions();
     }
 }

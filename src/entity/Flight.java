@@ -32,7 +32,7 @@ public class Flight {
 
     //creating a flight for visual purposes on flight lookup with a specified flightnum and specified fields
     public Flight(int flightNum, Plane plane, Crew crew, LocalDateTime departureDateTime,
-                  LocalDateTime arrivalDateTime, Airport origin, Airport destination, float basePrice) {
+                  LocalDateTime arrivalDateTime, Airport origin, Airport destination, float basePrice, Map<String, Ticket> ticketsMap) {
         this.flightNumber = flightNum;
         this.plane = plane;
         this.crew = crew;
@@ -40,21 +40,23 @@ public class Flight {
         this.arrivalDateTime = arrivalDateTime;
         this.origin = origin;
         this.destination = destination;
-        this.tickets = makeTickets(basePrice);
+        this.tickets = ticketsMap;
         this.basePrice = basePrice;
     }
+    
 
     private Map<String, Ticket> makeTickets(float basePrice) {
         Map<String, Ticket> ticketMap = new HashMap<>();
         for (Map.Entry<String, Seat> entry : plane.getSeats().entrySet()) {
             System.out.println(entry.getKey());
-            Ticket ticket = new Ticket(((int) Math.random() * 1000000), this, plane.getSeat(entry.getKey()), basePrice);
+            Ticket ticket = new Ticket(((int) Math.random() * 1000000), this.flightNumber, plane.getSeat(entry.getKey()), basePrice);
             SQLConnector.addTicket(ticket);
             ticketMap.put(entry.getKey(), ticket);
         }
         return ticketMap;
     }
 
+    
     // getters and setters
 
     public Plane getPlane() {
