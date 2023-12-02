@@ -11,10 +11,8 @@ import java.util.*;
 
 import src.controllers.*;
 import src.entity.*;
-//import SeatingMap;
 
 public class ProfilePage extends JFrame {
-//    private UserController userController;
     private Customer currentCustomer;
     private String destinationInput;
     private String originInput;
@@ -26,7 +24,6 @@ public class ProfilePage extends JFrame {
     private JFrame seatingMapFrame = new JFrame("App Name");
 
     public ProfilePage() {
-//        this.userController = user;
 
         setTitle("User Profile");
         setSize(1280, 720);
@@ -71,8 +68,6 @@ public class ProfilePage extends JFrame {
             });
             memberButtonsPanel.add(startMembershipButton);
             memberButtonsPanel.add(noMembershipButton);
-//            panel.add(startMembershipButton);
-//            panel.add(noMembershipButton);
             panel.add(memberButtonsPanel);
 
             noMembershipButton.addActionListener(new ActionListener() {
@@ -159,21 +154,21 @@ public class ProfilePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveUserInputs(originTextBox, destTextBox);
-                System.out.println("Origins (input):|" + originInput + "|onFile: |" + originAddress.getCity() + "|");
-                System.out.println("destination (input):|" + destinationInput + "|onFile: |" + destAddress.getCity() + "|");
+                //System.out.println("Origins (input):|" + originInput + "|onFile: |" + originAddress.getCity() + "|");
+                //System.out.println("destination (input):|" + destinationInput + "|onFile: |" + destAddress.getCity() + "|");
 
-                if (originAddress.getCity().equals( originInput) && destAddress.getCity().equals( destinationInput)){
+                //if (originAddress.getCity().equals( originInput) && destAddress.getCity().equals( destinationInput)){
                     displayFlight(flightPanel);//flight Number should be passed as an argument with the panel
-                    System.out.println("We are here!");
-                } else if (originInput.equals(originAddress.getCity()) && destinationInput.equals("")) {
-                    displayFlight(flightPanel);
-                    System.out.println("We are here elseif!");
-                } else if (destinationInput.equals(destAddress.getCity()) && originInput.equals("")) {
-                    displayFlight(flightPanel);
-                    System.out.println("We are here elseif2!");
-                } else {
-                    System.out.println("We are here else!");
-                }
+//                    System.out.println("We are here!");
+//                //} else if (originInput.equals(originAddress.getCity()) && destinationInput.equals("")) {
+//                    displayFlight(flightPanel);
+//                    System.out.println("We are here elseif!");
+//                } else if (destinationInput.equals(destAddress.getCity()) && originInput.equals("")) {
+//                    displayFlight(flightPanel);
+//                    System.out.println("We are here elseif2!");
+//                } else {
+//                    System.out.println("We are here else!");
+//                }
                 revalidate();
                 repaint();
             }
@@ -223,13 +218,10 @@ public class ProfilePage extends JFrame {
                 TextPanel.add(cancelButton);
                 currentPanel.add(TextPanel);
 
-
                 revalidate();
                 repaint();
             }
         }
-//        JTextArea flightDetails = new JTextArea("Flight number: AC575\nDeparting From: " + originInput + "\nDeparting at: " + LocalDateTime.now() + "Arriving to: " + destinationInput + "\nArriving at: " + LocalDateTime.now().plusHours(2) + "\nPrice: " + price);
-//        flightDetails.setEditable(false);
         revalidate();
         repaint();
     }
@@ -246,27 +238,21 @@ public class ProfilePage extends JFrame {
         this.destinationInput = destination.getText().trim();
     }
 
-        private void displayPolicy(JPanel panel, JPanel membersPanel) {
+    private void displayPolicy(JPanel panel, JPanel membersPanel) {
 
         JTextArea policyText = new JTextArea("       \t\tPOLICY          \n 1. Your membership is free and you will not be charged.\n 2. You agree to receiving emails from us that may be promotional.\n 3. A membership gives you benefits such as exclusive discounts.\n");
         policyText.setEditable(false);
-//        JScrollPane scrollPane = new JScrollPane(policyText);
-//
-//        panel.add(scrollPane);
-
         JPanel enrollPanel = new JPanel();
         JButton enrollButton = new JButton("Enroll");
         JButton cancelButton = new JButton("Cancel");
         enrollButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                panel.remove(policyText); // Clear the added components
-//                panel.remove(enrollButton); // Clear the added buttons
-//                panel.remove(cancelButton); // Clear the added buttons
+
                 panel.remove(enrollPanel);
-                // Replace this with your actual logic to generate and store the membership ID
+                // Below should be the logic to generate and store the membership ID for a user
+                // panel.add(new JLabel("Membership ID: " + currentCustomer.getMembership()));
                 currentCustomer.setMembership(new Membership());
-                //panel.add(new JLabel("Membership ID: " + currentCustomer.getMembership()));
                 double idMember = Math.floor(Math.random()* 100000);
                 panel.add(new JLabel("Membership ID: " + idMember));
 
@@ -277,25 +263,17 @@ public class ProfilePage extends JFrame {
         });
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-//                panel.remove(policyText); // Clear the added components
-//                panel.remove(enrollButton); // Clear the added buttons
-//                panel.remove(cancelButton); // Clear the added buttons
                 panel.remove(enrollPanel);
-//                panel.add(membershipButton); //prompt user again
-//                panel.add(noButton); //prompt user again
                 panel.add(membersPanel);
-
                 revalidate();
                 repaint();
             }
         });
-//        panel.add(enrollButton);
-//        panel.add(cancelButton);
+
         enrollPanel.add(policyText);
         enrollPanel.add(enrollButton);
         enrollPanel.add(cancelButton);
         panel.add(enrollPanel);
-
 
         revalidate();
         repaint();
