@@ -1,4 +1,3 @@
-
 package gui.components;
 
 import Models.ModelFlight;

@@ -183,7 +183,9 @@ public class ProfilePage extends JFrame {
 
     private void displayFlight(JPanel currentPanel) {
         JPanel allFlightsPanel = new JPanel();
-        for (Flight flight : FlightController.getInstance().getFlights()) {
+        ArrayList<Flight> flights = FlightController.getInstance().getFlights();
+        
+        for (Flight flight : flights) {
             // Check if getOrigin or getDestination equals user input
             if (flight.getOrigin().getCode().equals(originInput) || flight.getDestination().getCode().equals(destinationInput)) {
                 // Create a JTextLabel for the matching flight

@@ -405,7 +405,7 @@ public class SQLInsertions {
         }
     }
 
-    // public static void main(String[] args) {
-    //     testInsertions();
-    // }
+     public static void main(String[] args) {
+         testInsertions();
+     }
 }
