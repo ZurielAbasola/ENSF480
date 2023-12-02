@@ -30,7 +30,7 @@ public class ProfilePage extends JFrame {
     private LocalDateTime arrivalDateTimeFlights;
     private Airport originFlights;
     private Airport destinationFlights;
-    private ArrayList<Flight> testArrayFlightAttendants = new ArrayList<>();
+    private ArrayList<FlightAttendant> testArrayFlightAttendants = new ArrayList<>();
     private float basePriceFlights;
 
 
@@ -56,7 +56,7 @@ public class ProfilePage extends JFrame {
 
         //SHOULD BE CHANGED TO GETCUSTOMER() FUNCTIONALITY
         Address address = new Address("55th", "Calgary", "Alberta", "Canada", "90210");
-        currentCustomer = new Customer("John Smith", address, "johnsmith00", "password123");;
+        currentCustomer = new Customer("John Smith", address, "johnsmith00", "password123");
         //GETCUSTOMER()^^
 
         JLabel nameLabel = (new JLabel("Hey, " + currentCustomer.getName()));
@@ -134,18 +134,18 @@ public class ProfilePage extends JFrame {
 //
         //int flightNumberFlights = 23;
         for (int i = 0; i < 10; i++){
-            testArrayFlightAttendants.add(new FlightAttendant("Johnathan Smith", address, "johnsmith01", "password1234"))
+            testArrayFlightAttendants.add(new FlightAttendant("Johnathan Smith", address, "johnsmith01", "password1234"));
         }
 
         Plane planeFlights = new Plane(36, 6);
-        Crew crewFlights = new Crew(pilot, );
+        Crew crewFlights = new Crew(pilot, testArrayFlightAttendants);
         LocalDateTime departureDateTimeFlights = LocalDateTime.now();
         LocalDateTime arrivalDateTimeFlights = LocalDateTime.now().plusHours(4);
-        Airport originFlights = new Airport(originAddress);
-        Airport destinationFlights = new Airport(destAddress);
+        Airport originFlights = new Airport(originAddress, "YYC");
+        Airport destinationFlights = new Airport(destAddress, "YVR");
         float basePriceFlights = 300;
         for (int i = 0; i < 10; i++){
-            testArrayFlights.add(new Flight(planeFlights, crewFlights, departureDateTimeFlights, arrivalDateTimeFlights, originFlights, destinationFlights, basePriceFlights))
+            testArrayFlights.add(new Flight(planeFlights, crewFlights, departureDateTimeFlights, arrivalDateTimeFlights, originFlights, destinationFlights, basePriceFlights));
         }
 
 
