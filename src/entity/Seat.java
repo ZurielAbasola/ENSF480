@@ -5,6 +5,7 @@ public class Seat {
 	protected float priceMultiplier;
 
 	public Seat(String location) {
+		this.id = (int)Math.random() * 1000000;
 		this.location = location;
 	}
 
@@ -29,5 +30,9 @@ public class Seat {
 
 	public int getID(){
 		return id;
+	}
+
+	public void setID(int id){
+		this.id = id;
 	}
 }

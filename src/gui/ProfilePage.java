@@ -32,7 +32,7 @@ public class ProfilePage extends JFrame {
     private LocalDateTime arrivalDateTimeFlights;
     private Airport originFlights;
     private Airport destinationFlights;
-    private ArrayList<Flight> testArrayFlightAttendants = new ArrayList<>();
+    private ArrayList<FlightAttendant> testArrayFlightAttendants = new ArrayList<>();
     private float basePriceFlights;
 
 
@@ -139,20 +139,21 @@ public class ProfilePage extends JFrame {
 //        double flightNumber = flight.getFlightNumber();
 //
         //int flightNumberFlights = 23;
-        for (int i = 0; i < 10; i++){
-            testArrayFlightAttendants.add(new FlightAttendant("Johnathan Smith", address, "johnsmith01", "password1234"))
-        }
+//        for (int i = 0; i < 10; i++){
+//            testArrayFlightAttendants.add(new FlightAttendant("Johnathan Smith", address, "johnsmith01", "password1234"));
+//        }
 
-        Plane planeFlights = new Plane(36, 6);
-        Crew crewFlights = new Crew(pilot, );
-        LocalDateTime departureDateTimeFlights = LocalDateTime.now();
-        LocalDateTime arrivalDateTimeFlights = LocalDateTime.now().plusHours(4);
-        Airport originFlights = new Airport(originAddress);
-        Airport destinationFlights = new Airport(destAddress);
-        float basePriceFlights = 300;
-        for (int i = 0; i < 10; i++){
-            testArrayFlights.add(new Flight(planeFlights, crewFlights, departureDateTimeFlights, arrivalDateTimeFlights, originFlights, destinationFlights, basePriceFlights))
-        }
+        //Plane planeFlights = new Plane(1, 2);
+        testArrayFlights = FlightController.getInstance().getFlights();
+//        Crew crewFlights = new Crew(pilot, testArrayFlightAttendants);
+//        LocalDateTime departureDateTimeFlights = LocalDateTime.now();
+//        LocalDateTime arrivalDateTimeFlights = LocalDateTime.now().plusHours(4);
+//        Airport originFlights = new Airport(originAddress, "YYC");
+//        Airport destinationFlights = new Airport(destAddress, "YVR");
+//        float basePriceFlights = 300;
+//        for (int i = 0; i < 10; i++){
+//            testArrayFlights.add(new Flight(planeFlights, crewFlights, departureDateTimeFlights, arrivalDateTimeFlights, originFlights, destinationFlights, basePriceFlights));
+//        }
 
 
         flightPanel.add(bookFlightButton);
@@ -212,12 +213,12 @@ public class ProfilePage extends JFrame {
 
         // Make the frame visible
         setVisible(true);
-
+        
         add(panel);
     }
 
     private void displayFlight(JPanel currentPanel) {
-        JPanel allFlightsPanel = new JPanel();
+        JPanel allFlightsPanel = new JPanel(new GridLayout(0, 3));
 //        for (Flight flight : FlightController.getInstance().getFlights()) {
         for (Flight flight : testArrayFlights) {
             // Check if getOrigin or getDestination equals user input

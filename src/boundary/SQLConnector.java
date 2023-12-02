@@ -112,7 +112,7 @@ public class SQLConnector extends Singleton{
             ");");
 
             createTable(connection, "CREATE TABLE IF NOT EXISTS Seat (" +
-                "id INT PRIMARY KEY AUTO_INCREMENT, " +
+                "id INT PRIMARY KEY, " +
                 "location VARCHAR(255) NOT NULL, " +
                 "priceMultiplier FLOAT NOT NULL," +
                 "airplane_id INT," + 
@@ -224,7 +224,8 @@ public class SQLConnector extends Singleton{
                             String location = resultSet.getString("location");
                             float multi = resultSet.getFloat("priceMultiplier");
 
-                            Plane.setSeatFromSql(location, multi, seatMap);
+                            int id = resultSet.getInt("id");
+                            Plane.setSeatFromSql(location, multi, seatMap, id);
                         }
                     }
                 }

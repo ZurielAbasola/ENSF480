@@ -57,13 +57,19 @@ public class Plane {
     }
 
     //utility function for creating planes from MySQL Database
-    public static void setSeatFromSql(String seatKey, float price, Map<String, Seat> seats){
+    public static void setSeatFromSql(String seatKey, float price, Map<String, Seat> seats, int id){
         if(price == 1.35f){
-            seats.put(seatKey, new ComfortSeat(seatKey));
+            Seat seat = new ComfortSeat(seatKey);
+            seat.setID(id);
+            seats.put(seatKey, seat);
         }else if(price == 2.1f){
-            seats.put(seatKey, new BusinessClassSeat(seatKey));
+            Seat seat = new BusinessClassSeat(seatKey);
+            seat.setID(id);
+            seats.put(seatKey, seat);
         }else{
-            seats.put(seatKey, new OrdinarySeat(seatKey));
+            Seat seat = new OrdinarySeat(seatKey);
+            seat.setID(id);
+            seats.put(seatKey, seat);
         }
     }
 
