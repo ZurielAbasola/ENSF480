@@ -4,6 +4,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import src.entity.*;
@@ -260,9 +261,10 @@ public class SQLConnector extends Singleton{
                             int seatsPerRow = resultSet.getInt("seatsPerRow"); 
                             plane = new Plane(numRows,seatsPerRow);
 
-                            Map<String, Seat> seatMap = null;
+                            Map<String, Seat> seatMap = new HashMap<String, Seat>();
                             seatMap = makeSeats(plane_id, seatMap);
                             plane.setID(plane_id);
+                            plane.setSeats(seatMap);
                         }
                     }
                 }
@@ -362,7 +364,7 @@ public class SQLConnector extends Singleton{
                 connection = createDatabaseConnection(HOST, USER, PASS, DB);
                 String query = "SELECT * FROM FlightAttendant WHERE crew_id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                    preparedStatement.setInt(2, crew_id);
+                    preparedStatement.setInt(1, crew_id);
                     
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         while (resultSet.next()) {

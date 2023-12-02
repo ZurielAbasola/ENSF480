@@ -47,6 +47,7 @@ public class Flight {
     private Map<String, Ticket> makeTickets(float basePrice) {
         Map<String, Ticket> ticketMap = new HashMap<>();
         for (Map.Entry<String, Seat> entry : plane.getSeats().entrySet()) {
+            System.out.println(entry.getKey());
             Ticket ticket = new Ticket(((int) Math.random() * 1000000), this, plane.getSeat(entry.getKey()), basePrice);
             SQLConnector.addTicket(ticket);
             ticketMap.put(entry.getKey(), ticket);

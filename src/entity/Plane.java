@@ -77,6 +77,10 @@ public class Plane {
         return seats;
     }
 
+    public void setSeats(Map<String, Seat> seats) {
+        this.seats = seats;
+    }
+
     public void setID(int num){
         this.id=num;
     }

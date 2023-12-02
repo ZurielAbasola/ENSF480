@@ -161,13 +161,14 @@ public class SQLInsertions {
         }
     }
 
-    public static void insertSeatData(Connection connection, String location, float priceMultiplier, int airplane) {
+    public static void insertSeatData(Connection connection, int id, String location, float priceMultiplier, int airplane) {
         try {
-            String query = "INSERT INTO Seat (location, priceMultiplier, airplane_id) VALUES (?, ?, ?)";
+            String query = "INSERT INTO Seat (id, location, priceMultiplier, airplane_id) VALUES (?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, location);
-                preparedStatement.setFloat(2, priceMultiplier);
-                preparedStatement.setInt(3, airplane);
+                preparedStatement.setInt(1, id);
+                preparedStatement.setString(2, location);
+                preparedStatement.setFloat(3, priceMultiplier);
+                preparedStatement.setInt(4, airplane);
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 System.out.println(rowsAffected + " row(s) inserted into Seat table.");
@@ -176,6 +177,8 @@ public class SQLInsertions {
             e.printStackTrace();
         }
     }
+
+    
 
     public static void insertCrewData(Connection connection, int crewId, Integer pilotId) {
         try {
@@ -368,9 +371,9 @@ public class SQLInsertions {
             insertPilotData(connection, 111111);
             insertAirportData(connection, 1, "1 Airport Ave", "Vancouver", "CA", "Canada", "52467", "YYV");
             insertAirportData(connection, 2, "31 Airport Ave", "Calgary", "CA", "Canada", "52467", "YYC");
-            insertPlaneData(connection, 1, 4, 2);
-            insertSeatData(connection, "A1", 1.35f, 1);
-            insertSeatData(connection, "A2", 1.35f, 1);
+            insertPlaneData(connection, 1, 1, 2);
+            insertSeatData(connection, 1, "0A", 1.35f, 1);
+            insertSeatData(connection, 2,  "0B", 1.35f, 1);
             insertCrewData(connection, 1, 111111);
             insertFlightAttendantData(connection, 666666, 1);
             insertFlightData(connection, 123456, 1, 1, "2023-01-01 12:00:00", "2023-01-01 15:00:00", 1, 2, 25.0f);
