@@ -39,8 +39,6 @@ public class ProfilePage extends JFrame {
     private JFrame paymentFrame = new JFrame("Payment")
 
     public ProfilePage() {
-//        this.userController = user;
-
         setTitle("User Profile");
         setSize(1280, 720);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,43 +53,14 @@ public class ProfilePage extends JFrame {
         JLabel headerLabel = new JLabel(headerIcon);
         panel.add(headerLabel);
 
-        //SHOULD BE CHANGED TO GETCUSTOMER() FUNCTIONALITY
+        //GETCUSTOMER() FUNCTIONALITY
         currentCustomer = src.controllers.UserController.getCurrentUser();
-        //GETCUSTOMER()^^
 
         JLabel nameLabel = (new JLabel("Hey " + currentCustomer.getName() + ","));
         nameLabel.setFont(new Font("Times New Roman", Font.BOLD, 26)); // Set the font size to 16 (adjust as needed)
         JPanel memberButtonsPanel = new JPanel();
 
         panel.add(nameLabel);
-
-//        if (currentCustomer.getMembership() != null) {
-//            panel.add(new JLabel("Membership ID: " + currentCustomer.getMembership().getId()));
-//        } else {
-//            JButton startMembershipButton = new JButton("Start your free membership");
-//            JButton noMembershipButton = new JButton("No Thank you!");
-//            startMembershipButton.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    displayPolicy(panel, memberButtonsPanel);
-//                    panel.remove(memberButtonsPanel);
-//                }
-//            });
-//            memberButtonsPanel.add(startMembershipButton);
-//            memberButtonsPanel.add(noMembershipButton);
-//            panel.add(memberButtonsPanel);
-//
-//            noMembershipButton.addActionListener(new ActionListener() {
-//                @Override
-//                public void actionPerformed(ActionEvent e) {
-//                    panel.add(new JLabel("Membership: Not a member"));
-//                    panel.remove(memberButtonsPanel);
-//                    revalidate();
-//                    repaint();
-//                }
-//            });
-//
-//        }
 
         panel.add(new JLabel("Address: " + currentCustomer.getAddress().toString()));
         JPanel flightPanel = new JPanel();
@@ -103,7 +72,6 @@ public class ProfilePage extends JFrame {
 
         flightPanel.add(bookFlightButton);
         panel.add(flightPanel);
-        JPanel browseFlightsPanel = new JPanel( new GridLayout(5,2));
         JPanel searchByPanel = new JPanel();
         JTextField destTextBox = new JTextField(20);
         searchByPanel.add(new JLabel("Enter a destination (City):"));
@@ -142,6 +110,7 @@ public class ProfilePage extends JFrame {
         // Make the frame visible
         setVisible(true);
         add(panel);
+
     }
 
     private void displayFlight(JPanel currentPanel) {
@@ -187,42 +156,6 @@ public class ProfilePage extends JFrame {
         // Retrieve user inputs from text boxes and save them to variables
         this.originInput = origin.getText().trim();
         this.destinationInput = destination.getText().trim();
-    }
-
-    private void displayPolicy(JPanel panel, JPanel membersPanel) {
-
-        JTextArea policyText = new JTextArea("       \t\tPOLICY          \n 1. Your membership is free and you will not be charged.\n 2. You agree to receiving emails from us that may be promotional.\n 3. A membership gives you benefits such as exclusive discounts.\n");
-        policyText.setEditable(false);
-        JPanel enrollPanel = new JPanel();
-        JButton enrollButton = new JButton("Enroll");
-        JButton cancelButton = new JButton("Cancel");
-        enrollButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                panel.remove(enrollPanel);
-                // Below should be the logic to generate and store the membership ID for a user
-//                currentCustomer.setMembership(new Membership());
-                double idMember = Math.floor(Math.random()* 100000);
-                panel.add(new JLabel("Membership ID: " + idMember));
-                revalidate();
-                repaint();
-            }
-        });
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                panel.remove(enrollPanel);
-                panel.add(membersPanel);
-                revalidate();
-                repaint();
-            }
-        });
-        enrollPanel.add(policyText);
-        enrollPanel.add(enrollButton);
-        enrollPanel.add(cancelButton);
-        panel.add(enrollPanel);
-        revalidate();
-        repaint();
     }
     private void performSeatingMapFunctionality(JPanel currentPanel) {
         // Encapsulated functionality from SeatingMap
@@ -280,7 +213,7 @@ public class ProfilePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 submitAction(imageAndSelectionView, menuDropdown, numberDropdown, selectionLabel);
-                displayPayment(chosenTicket, currentPanel);
+                displayPayment(chosenTicket, imageAndSelectionView);
                 revalidate();
                 repaint();
             }
@@ -316,7 +249,7 @@ public class ProfilePage extends JFrame {
         mainPaymentPanel.add(cancelBookingButton);
         mainPaymentPanel.add(creditCardButton);
         thePanel.add(mainPaymentPanel);
-        
+
         paymentFrame.getContentPane().add(mainPaymentPanel);
         paymentFrame.setSize(1080, 720);
         paymentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -386,7 +319,7 @@ public class ProfilePage extends JFrame {
         } else {
             chosenTicket = flightChosen.getTickets().get(result);
             if (chosenTicket.getSeat().getLocation().equals(result)){
-                JOptionPane.showMessageDialog(null, "You selected seat: " + result);
+                //JOptionPane.showMessageDialog(null, "You selected seat: " + result);
                 selectionLabel.setText("Your selection: " + result);
                 //panel.setVisible(false);
                 //seatingMapFrame.setVisible(false);
