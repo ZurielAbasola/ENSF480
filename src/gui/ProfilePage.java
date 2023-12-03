@@ -399,7 +399,7 @@ public class ProfilePage extends JFrame {
     private Integer[] createNumberArray() {
         Integer[] numbers = new Integer[20];
         for (int i = 0; i < 20; i++) {
-            numbers[i] = i + 1;
+            numbers[i] = i;
         }
         return numbers;
     }
