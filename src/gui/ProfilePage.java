@@ -36,7 +36,7 @@ public class ProfilePage extends JFrame {
 
 
     private JFrame seatingMapFrame = new JFrame("Seating");
-    private JFrame paymentFrame = new JFrame("Payment");
+    private JFrame paymentFrame = new JFrame("Payment")
 
     public ProfilePage() {
         setTitle("User Profile");
@@ -213,7 +213,7 @@ public class ProfilePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 submitAction(imageAndSelectionView, menuDropdown, numberDropdown, selectionLabel);
-                displayPayment(chosenTicket, imageAndSelectionView);
+//                displayPayment(chosenTicket, imageAndSelectionView);
                 revalidate();
                 repaint();
             }
@@ -303,7 +303,7 @@ public class ProfilePage extends JFrame {
 
     // Method to show the image
     private void showImage(JLabel imageLabel, JPanel mainPanel) {
-        ImageIcon icon = new ImageIcon("SeatingMap.png");
+        ImageIcon icon = new ImageIcon("SeatingMap.jpg");
         Image image = icon.getImage().getScaledInstance(mainPanel.getWidth() - 100, mainPanel.getHeight() - 120, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(image));
         mainPanel.add(imageLabel);
@@ -323,6 +323,7 @@ public class ProfilePage extends JFrame {
                 selectionLabel.setText("Your selection: " + result);
                 //panel.setVisible(false);
                 //seatingMapFrame.setVisible(false);
+                displayPayment(chosenTicket, panel);
             } else {
                 JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
             }
