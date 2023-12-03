@@ -13,10 +13,8 @@ import src.controllers.*;
 import src.entity.*;
 import src.entity.Crew;
 import src.entity.Plane;
-//import SeatingMap;
 
 public class ProfilePage extends JFrame {
-    //    private UserController userController;
     private Customer currentCustomer;
     private String destinationInput;
     private String originInput;
@@ -26,10 +24,9 @@ public class ProfilePage extends JFrame {
     private JPanel mainPanel = new JPanel();
     private ArrayList<Flight> testArrayFlights = new ArrayList<>();
     private int flightNumberFlights = 0;
+    private Flight flightChosen;
+    private Ticket chosenTicket;
     private Plane planeFlights;
-    private Crew crewFlights;
-    private LocalDateTime departureDateTimeFlights;
-    private LocalDateTime arrivalDateTimeFlights;
     private Airport originFlights;
     private Airport destinationFlights;
     private ArrayList<FlightAttendant> testArrayFlightAttendants = new ArrayList<>();
@@ -51,28 +48,23 @@ public class ProfilePage extends JFrame {
 
     private void initComponents() {
 
-        // Header
-
-
         JPanel panel = new JPanel(new GridLayout(5,2));
         ImageIcon headerIcon = resizeImageIcon( new ImageIcon("headerImage.jpg"), 1280, 300); // Header image
         JLabel headerLabel = new JLabel(headerIcon);
         panel.add(headerLabel);
-        // Footer
 
         //SHOULD BE CHANGED TO GETCUSTOMER() FUNCTIONALITY
-        Address address = new Address("55th", "Calgary", "Alberta", "Canada", "90210");
-        currentCustomer = new Customer("John Smith", address, "johnsmith00", "password123");;
+        currentCustomer = src.controllers.UserController.getCurrentUser();
         //GETCUSTOMER()^^
 
-        JLabel nameLabel = (new JLabel("Hey, " + currentCustomer.getName()));
-        nameLabel.setFont(new Font("Times New Roman", Font.BOLD, 21)); // Set the font size to 16 (adjust as needed)
+        JLabel nameLabel = (new JLabel("Hey " + currentCustomer.getName() + ","));
+        nameLabel.setFont(new Font("Times New Roman", Font.BOLD, 26)); // Set the font size to 16 (adjust as needed)
         JPanel memberButtonsPanel = new JPanel();
 
         panel.add(nameLabel);
 
-        if ( currentCustomer.getMembership() != null) {
-            panel.add(new JLabel("Membership ID: " + currentCustomer.getId()));
+        if (currentCustomer.getMembership() != null) {
+            panel.add(new JLabel("Membership ID: " + currentCustomer.getMembership().getId()));
         } else {
             JButton startMembershipButton = new JButton("Start your free membership");
             JButton noMembershipButton = new JButton("No Thank you!");
@@ -103,58 +95,9 @@ public class ProfilePage extends JFrame {
         JPanel flightPanel = new JPanel();
 
         JButton bookFlightButton = new JButton("Book a Flight!");
-        //Plane plane = new Plane(); /* initialize Plane */
-
-        ArrayList<FlightAttendant> flightAttendants = new ArrayList<>();
-        Pilot pilot = new Pilot("Johnathan Smith", address, "johnsmith01", "password1234");
-
-        // Create a Crew
-        Crew crew = new Crew(pilot, flightAttendants);// initialize Crew
-        Address originAddress = new Address("9th St. NE", "Calgary", "Alberta", "Canada", "90210");
-        Address destAddress = new Address("9th Ave SW", "Vancouver", "British Columbia", "Canada", "01209");
-
-
-        // Create Airports
-        Airport origin = new Airport(originAddress, "YYC"); /* initialize Airport */
-        Airport destination = new Airport(destAddress, "YVR"); /* initialize Airport */
-
-        // Set departure and arrival times
-        LocalDateTime departureDateTime = LocalDateTime.now();
-        LocalDateTime arrivalDateTime = departureDateTime.plusHours(2);
-
 
         // Create a Flight object
-        price = 200;
-//        Flight flight = new Flight(plane, crew, departureDateTime, arrivalDateTime, origin, destination, (float) price);
-//
-//        // Make calls to get methods
-//        Plane flightPlane = flight.getPlane();
-//        Crew flightCrew = flight.getCrew();
-//        LocalDateTime flightDepartureDateTime = flight.getDepartureDateTime();ProfilePage.java:147
-//        LocalDateTime flightArrivalDateTime = flight.getArrivalDateTime();
-//        Airport flightOrigin = flight.getOrigin();
-//        Airport flightDestination = flight.getDestination();
-//        Map<String, Ticket> flightTickets = flight.getTickets();
-//        boolean isSeatAvailable = flight.isSeatAvailable();/* provide seat location */
-//        double flightNumber = flight.getFlightNumber();
-//
-        //int flightNumberFlights = 23;
-//        for (int i = 0; i < 10; i++){
-//            testArrayFlightAttendants.add(new FlightAttendant("Johnathan Smith", address, "johnsmith01", "password1234"));
-//        }
-
-        //Plane planeFlights = new Plane(1, 2);
         testArrayFlights = FlightController.getInstance().getFlights();
-//        Crew crewFlights = new Crew(pilot, testArrayFlightAttendants);
-//        LocalDateTime departureDateTimeFlights = LocalDateTime.now();
-//        LocalDateTime arrivalDateTimeFlights = LocalDateTime.now().plusHours(4);
-//        Airport originFlights = new Airport(originAddress, "YYC");
-//        Airport destinationFlights = new Airport(destAddress, "YVR");
-//        float basePriceFlights = 300;
-//        for (int i = 0; i < 10; i++){
-//            testArrayFlights.add(new Flight(planeFlights, crewFlights, departureDateTimeFlights, arrivalDateTimeFlights, originFlights, destinationFlights, basePriceFlights));
-//        }
-
 
         flightPanel.add(bookFlightButton);
         panel.add(flightPanel);
@@ -173,7 +116,7 @@ public class ProfilePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 remove(panel);
-                JLabel nameLabel = (new JLabel("You can search for a flight by typing a destination or a origin or both!\nPlease use the code of the desired airport, e.g. if your desired origin is Calgary, please type YYC, if it's Edmonton, type YEG, etc.\n"));
+                JLabel nameLabel = (new JLabel("You can search for a flight by typing a destination or a origin or both!\n Please use the code of the desired airport, e.g. if your desired origin is Calgary, please type YYC, if it's Vancouver, type YYV, etc.\n"));
                 flightPanel.add(nameLabel);
                 flightPanel.add(searchByPanel);
                 flightPanel.remove(bookFlightButton);
@@ -198,45 +141,35 @@ public class ProfilePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveUserInputs(originTextBox, destTextBox);
-                //System.out.println("Origins (input):|" + originInput + "|onFile: |" + originAddress.getCity() + "|");
-                //System.out.println("destination (input):|" + destinationInput + "|onFile: |" + destAddress.getCity() + "|");
-
-                //if (originAddress.getCity().equals( originInput) && destAddress.getCity().equals( destinationInput)){
-                displayFlight(flightPanel);//flight Number should be passed as an argument with the panel
-                
+                displayFlight(flightPanel);
                 revalidate();
                 repaint();
             }
         });
         searchByPanel.add(saveButton);
         searchByPanel.add(cancelandReturnButton);
-
         // Make the frame visible
         setVisible(true);
-        
         add(panel);
     }
 
     private void displayFlight(JPanel currentPanel) {
         JPanel allFlightsPanel = new JPanel(new GridLayout(0, 3));
-//        for (Flight flight : FlightController.getInstance().getFlights()) {
         for (Flight flight : testArrayFlights) {
             // Check if getOrigin or getDestination equals user input
             if (flight.getOrigin().getCode().equals(originInput) || flight.getDestination().getCode().equals(destinationInput)) {
                 // Create a JTextLabel for the matching flight
-                JTextArea flightDetails = new JTextArea("Flight number: " + flight.getFlightNum()+"\nDeparting From: " + flight.getOrigin().getCode() + "\nDeparting at: " + flight.getDepartureDateTime() + "Arriving to: " + flight.getDestination().getCode() + "\nArriving at: " + flight.getArrivalDateTime() + "\nPrice: " + flight.getBasePrice());
+                JTextArea flightDetails = new JTextArea("Flight number: " + flight.getFlightNum()+"\nDeparting From: " + flight.getOrigin().getCode() + "\nDeparting at: " + flight.getDepartureDateTime() + "\nArriving to: " + flight.getDestination().getCode() + "\nArriving at: " + flight.getArrivalDateTime() + "\nPrice: " + flight.getBasePrice());
                 flightDetails.setEditable(false);
                 JPanel flightPanelDisplay = new JPanel();
                 // Add the JTextLabel to the panel
                 flightPanelDisplay.add(flightDetails);
-
-                //JPanel TextPanel = new JPanel();
                 JButton selectSeatsButton = new JButton("Select Seats for flight");
                 selectSeatsButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         performSeatingMapFunctionality(currentPanel);
-
+                        flightChosen = flight;
                         revalidate();
                         repaint();
                     }
@@ -249,7 +182,6 @@ public class ProfilePage extends JFrame {
 
         }
         currentPanel.add(allFlightsPanel);
-
         revalidate();
         repaint();
     }
@@ -279,12 +211,9 @@ public class ProfilePage extends JFrame {
 
                 panel.remove(enrollPanel);
                 // Below should be the logic to generate and store the membership ID for a user
-                // panel.add(new JLabel("Membership ID: " + currentCustomer.getMembership()));
                 currentCustomer.setMembership(new Membership());
                 double idMember = Math.floor(Math.random()* 100000);
                 panel.add(new JLabel("Membership ID: " + idMember));
-
-
                 revalidate();
                 repaint();
             }
@@ -297,12 +226,10 @@ public class ProfilePage extends JFrame {
                 repaint();
             }
         });
-
         enrollPanel.add(policyText);
         enrollPanel.add(enrollButton);
         enrollPanel.add(cancelButton);
         panel.add(enrollPanel);
-
         revalidate();
         repaint();
     }
@@ -379,6 +306,7 @@ public class ProfilePage extends JFrame {
         ImageIcon icon = new ImageIcon("SeatingMap.jpg");
         Image image = icon.getImage().getScaledInstance(mainPanel.getWidth() - 100, mainPanel.getHeight() - 120, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(image));
+        mainPanel.add(imageLabel);
     }
 
     // Method to perform the action when the submit button is clicked
@@ -389,11 +317,18 @@ public class ProfilePage extends JFrame {
         if ((selectedLetter.equals("C") || selectedLetter.equals("D")) && (selectedNumber == 1 || selectedNumber == 2 || selectedNumber == 3)) {
             JOptionPane.showMessageDialog(null, "Please select a valid seat");
         } else {
-            JOptionPane.showMessageDialog(null, "You selected seat: " + result);
-            selectionLabel.setText("Your selection: " + result);
-            panel.setVisible(false);
+            chosenTicket = flightChosen.getTickets().get(result);
+            if (chosenTicket.getSeat().getLocation().equals(result)){
+                JOptionPane.showMessageDialog(null, "You selected seat: " + result);
+                selectionLabel.setText("Your selection: " + result);
+                panel.setVisible(false);
+                seatingMapFrame.setVisible(false);
+                new PaymentGUI(chosenTicket);
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
+            }
         }
-        seatingMapFrame.setVisible(false);
     }
 
     private Integer[] createNumberArray() {
