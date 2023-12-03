@@ -52,4 +52,8 @@ public class UserController extends Singleton {
 		}
 		return false;
 	}
+
+	public static User getCurrentUser() {
+        return currentUser;
+    }
 }

@@ -1,4 +1,4 @@
-package gui;
+package src.gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +13,10 @@ import src.controllers.*;
 import src.entity.*;
 import src.entity.Crew;
 import src.entity.Plane;
+import src.gui.*;
 
 public class ProfilePage extends JFrame {
-    private Customer currentCustomer;
+    private User currentCustomer;
     private String destinationInput;
     private String originInput;
     private int price;
@@ -63,35 +64,35 @@ public class ProfilePage extends JFrame {
 
         panel.add(nameLabel);
 
-        if (currentCustomer.getMembership() != null) {
-            panel.add(new JLabel("Membership ID: " + currentCustomer.getMembership().getId()));
-        } else {
-            JButton startMembershipButton = new JButton("Start your free membership");
-            JButton noMembershipButton = new JButton("No Thank you!");
-            startMembershipButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    displayPolicy(panel, memberButtonsPanel);
-                    panel.remove(memberButtonsPanel);
-                }
-            });
-            memberButtonsPanel.add(startMembershipButton);
-            memberButtonsPanel.add(noMembershipButton);
-            panel.add(memberButtonsPanel);
+//        if (currentCustomer.getMembership() != null) {
+//            panel.add(new JLabel("Membership ID: " + currentCustomer.getMembership().getId()));
+//        } else {
+//            JButton startMembershipButton = new JButton("Start your free membership");
+//            JButton noMembershipButton = new JButton("No Thank you!");
+//            startMembershipButton.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    displayPolicy(panel, memberButtonsPanel);
+//                    panel.remove(memberButtonsPanel);
+//                }
+//            });
+//            memberButtonsPanel.add(startMembershipButton);
+//            memberButtonsPanel.add(noMembershipButton);
+//            panel.add(memberButtonsPanel);
+//
+//            noMembershipButton.addActionListener(new ActionListener() {
+//                @Override
+//                public void actionPerformed(ActionEvent e) {
+//                    panel.add(new JLabel("Membership: Not a member"));
+//                    panel.remove(memberButtonsPanel);
+//                    revalidate();
+//                    repaint();
+//                }
+//            });
+//
+//        }
 
-            noMembershipButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    panel.add(new JLabel("Membership: Not a member"));
-                    panel.remove(memberButtonsPanel);
-                    revalidate();
-                    repaint();
-                }
-            });
-
-        }
-
-        panel.add(new JLabel("Address: " + currentCustomer.getAddress().toString()));
+ panel.add(new JLabel("Address: " + currentCustomer.getAddress().toString()));
         JPanel flightPanel = new JPanel();
 
         JButton bookFlightButton = new JButton("Book a Flight!");
@@ -211,7 +212,7 @@ public class ProfilePage extends JFrame {
 
                 panel.remove(enrollPanel);
                 // Below should be the logic to generate and store the membership ID for a user
-                currentCustomer.setMembership(new Membership());
+//                currentCustomer.setMembership(new Membership());
                 double idMember = Math.floor(Math.random()* 100000);
                 panel.add(new JLabel("Membership ID: " + idMember));
                 revalidate();
@@ -323,8 +324,8 @@ public class ProfilePage extends JFrame {
                 selectionLabel.setText("Your selection: " + result);
                 panel.setVisible(false);
                 seatingMapFrame.setVisible(false);
+                this.dispose();
                 new PaymentGUI(chosenTicket);
-                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
             }

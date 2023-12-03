@@ -3,12 +3,8 @@ package src.gui;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import src.controllers.PaymentController;
-import src.entity.CancellationInsurance;
-import src.entity.CreditCard;
-import src.entity.Flight;
-import src.entity.Payment;
-import src.entity.Ticket;
+import src.entity.*;
+import src.controllers.*;
 
 public class PaymentGUI extends JFrame {
     private Flight flight;
@@ -17,23 +13,20 @@ public class PaymentGUI extends JFrame {
     private CancellationInsurance insurance;
     private CreditCard creditCard;
     private Payment payment;
-    private PaymentController paymentController;
 
     private JTextArea checkOutDetails;
 
 
-    public PaymentGUI(Flight flight, String seat, CancellationInsurance insurance) {
-        this.flight = flight;
-        this.seat = seat;
-        this.insurance = insurance;
-
+    public PaymentGUI(Ticket ticket) {
+        this.ticket = ticket;
         initializeComponents();
         setupLayout();
     }
 
     private void initializeComponents() {
+        JPanel mainPaymentPanel = new JPanel();
         JTextArea checkOutDetails = new JTextArea("Origin: " + flight.getOrigin() +"\nDestination: " + flight.getDestination() + "\nPrice: $" + flight.getBasePrice() + "Seat: " + seat);
-        flightDetails.setEditable(false);
+        checkOutDetails.setEditable(false);
         JButton cancelBookingButton = new JButton("Cancel Flight Booking");
         JButton creditCardButton = new JButton("Credit Card Payment");
 
@@ -51,9 +44,10 @@ public class PaymentGUI extends JFrame {
             }
         });
 
-        add(checkOutDetails);
-        add(cancelBookingButton);
-        add(creditCardButton);
+        
+        mainPaymentPanel.add(checkOutDetails);
+        mainPaymentPanel.add(cancelBookingButton);
+        mainPaymentPanel.add(creditCardButton);
     }
 
     private void setupLayout() {
