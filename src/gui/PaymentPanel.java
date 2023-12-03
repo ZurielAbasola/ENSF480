@@ -154,6 +154,14 @@ public class PaymentPanel extends javax.swing.JFrame {
         String nbr = number.getText();
         String exp = expiryDate.getText();
         String cvvInt = cvv.getText();
+        
+        CreditCard creditCard = new CreditCard(Long.parseLong(nbr) , Integer.parseInt(exp), Integer.parseInt(cvvInt));
+        System.out.println("Credit Card Details: " + creditCard.toString());
+        if(PaymentController.getInstance().makePayment(ticket, creditCard, insurance)){
+        JOptionPane.showMessageDialog(this, "Ticket has been successfully booked! you will receive an email shortly");
+         } else{
+        JOptionPane.showMessageDialog(this, "An issue has occured with Payment, You are now returning to the main Page!");
+         }
     }//GEN-LAST:event_makePaymentBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
