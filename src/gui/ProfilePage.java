@@ -214,14 +214,27 @@ public class ProfilePage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 submitAction(imageAndSelectionView, menuDropdown, numberDropdown, selectionLabel);
+                System.out.println("Right After returning to PerfromSeatingMap");
+
 //                displayPayment(chosenTicket, imageAndSelectionView);
                 revalidate();
+                System.out.println("Right After validate PerfromSeatingMap");
+
                 repaint();
+                System.out.println("Right After repaint to PerfromSeatingMap");
+
             }
         });
+        
         currentPanel.add(mainPanel);
+        System.out.println("Here line 230");
+
         revalidate();
+        System.out.println("Here line 230 After revalidate");
+
         repaint();
+        System.out.println("Here line 230 After repaint");
+
     }
     public void displayPayment(Ticket theTicket, JPanel thePanel){
         thePanel.removeAll();
@@ -321,14 +334,17 @@ public class ProfilePage extends JFrame {
             chosenTicket = flightChosen.getTickets().get(result);
             if (chosenTicket.getSeat().getLocation().equals(result)){
                 //JOptionPane.showMessageDialog(null, "You selected seat: " + result);
+                
                 selectionLabel.setText("Your selection: " + result);
                 //panel.setVisible(false);
                 //seatingMapFrame.setVisible(false);
 //                displayPayment(chosenTicket, panel);
+                System.out.println("Right Before calling PaymentFrame");
                 PaymentPanel paymentFrame = new PaymentPanel(chosenTicket, chosenTicket.getCancellationInsurance());
                 paymentFrame.setVisible(true);
                 paymentFrame.pack();
                 paymentFrame.setLocationRelativeTo(null);
+                System.out.println("Right After calling PaymentFrame");
             } else {
                 JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
             }
