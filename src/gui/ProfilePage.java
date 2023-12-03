@@ -402,7 +402,7 @@ public class ProfilePage extends JFrame {
                 JOptionPane.showMessageDialog(null, "You selected seat: " + result);
                 selectionLabel.setText("Your selection: " + result);
                 panel.setVisible(false);
-                seatingMapFrame.setVisible(false);
+//                seatingMapFrame.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
             }
