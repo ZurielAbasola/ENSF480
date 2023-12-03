@@ -1,6 +1,14 @@
+package src.gui;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import src.controllers.PaymentController;
+import src.entity.CancellationInsurance;
+import src.entity.CreditCard;
+import src.entity.Flight;
+import src.entity.Payment;
+import src.entity.Ticket;
 
 public class PaymentGUI extends JFrame {
     private Flight flight;
@@ -11,7 +19,7 @@ public class PaymentGUI extends JFrame {
     private Payment payment;
     private PaymentController paymentController;
 
-    private JTextArea checkOutDetails
+    private JTextArea checkOutDetails;
 
 
     public PaymentGUI(Flight flight, String seat, CancellationInsurance insurance) {
@@ -79,25 +87,25 @@ public class PaymentGUI extends JFrame {
 
         if (result == JOptionPane.OK_OPTION) {
             // User pressed OK, create CreditCard object with entered details
-            long cardNumber = cardNumberField.getText();
-            int expirationDate = expirationDateField.getText();
-            int cvv = cvvField.getText();
+            String cardNumber = cardNumberField.getText();
+            String expirationDate = expirationDateField.getText();
+            String cvv = cvvField.getText();
 
-            CreditCard creditCard = new CreditCard(cardNumber, expirationDate, cvv);
+            CreditCard creditCard = new CreditCard(Long.parseLong(cardNumber) , Integer.parseInt(expirationDate), Integer.parseInt(cvv));
             // Perform further actions with the credit card object as needed
             System.out.println("Credit Card Details: " + creditCard.toString());
-            //if(makePayment(ticket, creditCard, insurance)){
-//            JOptionPane.showMessageDialog(this, "Ticket has been successfully booked! you will receive an email shortly");
-            // } else{
-//            JOptionPane.showMessageDialog(this, "An issue has occured with Payment, You are now returning to the main Page!");
-            // }
+            if(PaymentController.getInstance().makePayment(ticket, creditCard, insurance)){
+            JOptionPane.showMessageDialog(this, "Ticket has been successfully booked! you will receive an email shortly");
+             } else{
+            JOptionPane.showMessageDialog(this, "An issue has occured with Payment, You are now returning to the main Page!");
+             }
         }
     }
 
-    public static void main(String[] args) {
-        // Example usage:
-        //FlightController flightController = FlightController.getInstance();
-
-        PaymentGUI paymentGUI = new PaymentGUI(sampleFlight, "A1", sampleInsurance);
-    }
+//    public static void main(String[] args) {
+//        // Example usage:
+//        //FlightController flightController = FlightController.getInstance();
+//
+//        PaymentGUI paymentGUI = new PaymentGUI(sampleFlight, "A1", sampleInsurance);
+//    }
 }
