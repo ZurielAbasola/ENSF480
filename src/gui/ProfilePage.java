@@ -35,7 +35,8 @@ public class ProfilePage extends JFrame {
 
 
 
-    private JFrame seatingMapFrame = new JFrame("App Name");
+    private JFrame seatingMapFrame = new JFrame("Seating");
+    private JFrame paymentFrame = new JFrame("Payment")
 
     public ProfilePage() {
 //        this.userController = user;
@@ -138,7 +139,6 @@ public class ProfilePage extends JFrame {
             }
         });
         searchByPanel.add(saveButton);
-//        searchByPanel.add(cancelandReturnButton);
         // Make the frame visible
         setVisible(true);
         add(panel);
@@ -263,7 +263,6 @@ public class ProfilePage extends JFrame {
         // Set frame properties
         seatingMapFrame.getContentPane().add(mainPanel);
         seatingMapFrame.setSize(1080, 720);
-//        seatingMapFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         seatingMapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         seatingMapFrame.setVisible(true);
 
@@ -317,6 +316,11 @@ public class ProfilePage extends JFrame {
         mainPaymentPanel.add(cancelBookingButton);
         mainPaymentPanel.add(creditCardButton);
         thePanel.add(mainPaymentPanel);
+        
+        paymentFrame.getContentPane().add(mainPaymentPanel);
+        paymentFrame.setSize(1080, 720);
+        paymentFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        paymentFrame.setVisible(true);
         revalidate();
         repaint();
     }
@@ -384,8 +388,8 @@ public class ProfilePage extends JFrame {
             if (chosenTicket.getSeat().getLocation().equals(result)){
                 JOptionPane.showMessageDialog(null, "You selected seat: " + result);
                 selectionLabel.setText("Your selection: " + result);
-                panel.setVisible(false);
-                seatingMapFrame.setVisible(false);
+                //panel.setVisible(false);
+                //seatingMapFrame.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
             }
