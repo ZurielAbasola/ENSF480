@@ -126,16 +126,6 @@ public class ProfilePage extends JFrame {
                 repaint();
             }
         });
-        JButton cancelandReturnButton = new JButton("Return to main page");
-        cancelandReturnButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ProfilePage();
-                dispose();
-
-            }
-        });
-        searchByPanel.add(cancelandReturnButton);
         // Create a button to trigger action (optional)
         JButton saveButton = new JButton("Search for a flight!");
         saveButton.addActionListener(new ActionListener() {
@@ -322,20 +312,12 @@ public class ProfilePage extends JFrame {
             }
         });
 
-
         mainPaymentPanel.add(checkOutDetails);
         mainPaymentPanel.add(cancelBookingButton);
         mainPaymentPanel.add(creditCardButton);
         thePanel.add(mainPaymentPanel);
         revalidate();
         repaint();
-    }
-    private void setupLayout() {
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setVisible(true);
     }
 
     private void showCancellationNotification() {
@@ -402,7 +384,7 @@ public class ProfilePage extends JFrame {
                 JOptionPane.showMessageDialog(null, "You selected seat: " + result);
                 selectionLabel.setText("Your selection: " + result);
                 panel.setVisible(false);
-//                seatingMapFrame.setVisible(false);
+                seatingMapFrame.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
             }
