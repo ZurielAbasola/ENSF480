@@ -251,15 +251,16 @@ public class SQLConnector extends Singleton{
             Seat seat = null;
             try {
                 connection = createDatabaseConnection(HOST, USER, PASS, DB);
-                String query = "SELECT * FROM Seat WHERE airplane_id = ?";
+                String query = "SELECT * FROM Seat WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, airplane_id);
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                        while (resultSet.next()) {
+                        if (resultSet.next()) {
                             String location = resultSet.getString("location");
                             float multi = resultSet.getFloat("priceMultiplier");
                             int id = resultSet.getInt("id");
-
+                            
+                            System.out.println("here");
                             seat = Seat.makeSeatFromSql(location, multi, id);
                         }
                     }
@@ -292,11 +293,12 @@ public class SQLConnector extends Singleton{
                         while (resultSet.next()) {
                             int id = resultSet.getInt("id");
                             int ticketholderID = resultSet.getInt("id");
-                            Seat seat = makeSeat(resultSet.getInt("seat_id"));
+                            System.out.println(resultSet.getInt("seat_id"));
+                            int seatnum = resultSet.getInt("seat_id");
                             float price = resultSet.getFloat("price");
-                            CancellationInsurance CI = makeCI(resultSet.getInt("cancellationInsurance_id"));
-                            boolean sold = resultSet.getBoolean("sold");
-                            
+                            int CIID = resultSet.getInt("cancellationInsurance_id");
+                            CancellationInsurance CI = makeCI(CIID);
+                            Seat seat = makeSeat(seatnum);
                             Ticket ticket = new Ticket(id, flight_num, seat, price, ticketholderID, CI);
                             ticketMap.put(seat.getLocation(), ticket);
                         }
@@ -318,12 +320,13 @@ public class SQLConnector extends Singleton{
             return ticketMap;
         }
 
-        private static Map<String, Seat> makeSeats(int airplane_id, Map<String, Seat> seatMap){
+        private static Map<String, Seat> makeSeats(int airplane_id){
             Connection connection = null;
+            Map<String, Seat> seatMap = new HashMap<String, Seat>();
 
             try {
                 connection = createDatabaseConnection(HOST, USER, PASS, DB);
-                String query = "SELECT * FROM Seat WHERE airplane_id = ?";
+                String query = "SELECT * FROM Seat WHERE id = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setInt(1, airplane_id);
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -367,8 +370,8 @@ public class SQLConnector extends Singleton{
                             int seatsPerRow = resultSet.getInt("seatsPerRow"); 
                             plane = new Plane(numRows,seatsPerRow);
 
-                            Map<String, Seat> seatMap = null;
-                            seatMap = makeSeats(plane_id, seatMap);
+                            
+                            Map<String, Seat> seatMap = makeSeats(plane_id);
                             plane.setSeats(seatMap);
                             plane.setID(plane_id);
                         }
@@ -1161,7 +1164,7 @@ public class SQLConnector extends Singleton{
                 String query = "SELECT * FROM User WHERE username = ? and u_password = ?";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     preparedStatement.setString(1, username);
-                    preparedStatement.setString(1, U_password);
+                    preparedStatement.setString(2, U_password);
                     try (ResultSet resultSet = preparedStatement.executeQuery()) {
                         if (resultSet.next()) {
                             Address address = makeAddress(resultSet.getInt("id"));
