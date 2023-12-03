@@ -302,7 +302,8 @@ public class ProfilePage extends JFrame {
     public void displayPayment(Ticket theTicket, JPanel thePanel){
         thePanel.removeAll();
         JPanel mainPaymentPanel = new JPanel();
-        JTextArea checkOutDetails = new JTextArea("Origin: " + chosenTicket.getFlight().getOrigin().getAddress().getCity() + ", " + chosenTicket.getFlight().getOrigin().getCode() +"\nDestination: " + chosenTicket.getFlight().getDestination().getAddress().getCity() + ", " + chosenTicket.getFlight().getDestination().getCode() + "\nPrice: $" + flight.getBasePrice() + "Seat: " + chosenTicket.getSeat().getLocation());
+        Flight paymentForFlight = FlightController.getInstance().getFlight(chosenTicket.getFlight());
+        JTextArea checkOutDetails = new JTextArea("Origin: " + paymentForFlight.getOrigin().getAddress().getCity() + ", " + paymentForFlight.getOrigin().getCode() +"\nDestination: " + paymentForFlight.getDestination().getAddress().getCity() + ", " + paymentForFlight.getDestination().getCode() + "\nPrice: $" + paymentForFlight.getBasePrice() + "Seat: " + chosenTicket.getSeat().getLocation());
         checkOutDetails.setEditable(false);
         JButton cancelBookingButton = new JButton("Cancel Flight Booking");
         JButton creditCardButton = new JButton("Credit Card Payment");
