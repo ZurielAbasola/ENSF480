@@ -302,7 +302,7 @@ public class ProfilePage extends JFrame {
     public void displayPayment(Ticket theTicket, JPanel thePanel){
         thePanel.removeAll();
         JPanel mainPaymentPanel = new JPanel();
-        JTextArea checkOutDetails = new JTextArea("Origin: " + flight.getOrigin() +"\nDestination: " + flight.getDestination() + "\nPrice: $" + flight.getBasePrice() + "Seat: " + seat);
+        JTextArea checkOutDetails = new JTextArea("Origin: " + chosenTicket.getFlight().getOrigin().getAddress().getCity() + ", " + chosenTicket.getFlight().getOrigin().getCode() +"\nDestination: " + chosenTicket.getFlight().getDestination().getAddress().getCity() + ", " + chosenTicket.getFlight().getDestination().getCode() + "\nPrice: $" + flight.getBasePrice() + "Seat: " + chosenTicket.getSeat().getLocation());
         checkOutDetails.setEditable(false);
         JButton cancelBookingButton = new JButton("Cancel Flight Booking");
         JButton creditCardButton = new JButton("Credit Card Payment");
@@ -367,7 +367,7 @@ public class ProfilePage extends JFrame {
             CreditCard creditCard = new CreditCard(Long.parseLong(cardNumber) , Integer.parseInt(expirationDate), Integer.parseInt(cvv));
             // Perform further actions with the credit card object as needed
             System.out.println("Credit Card Details: " + creditCard.toString());
-            if(PaymentController.getInstance().makePayment(ticket, creditCard, insurance)){
+            if(PaymentController.getInstance().makePayment(chosenTicket, creditCard, chosenTicket.getCancellationInsurance())){
                 JOptionPane.showMessageDialog(this, "Ticket has been successfully booked! you will receive an email shortly");
             } else{
                 JOptionPane.showMessageDialog(this, "An issue has occured with Payment, You are now returning to the main Page!");
@@ -408,7 +408,6 @@ public class ProfilePage extends JFrame {
         }
     }
 
-    }
     private Integer[] createNumberArray() {
         Integer[] numbers = new Integer[20];
         for (int i = 0; i < 20; i++) {
