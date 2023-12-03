@@ -1,5 +1,6 @@
 package src.gui;
 
+import gui.PaymentPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -36,12 +37,12 @@ public class ProfilePage extends JFrame {
 
 
     private JFrame seatingMapFrame = new JFrame("Seating");
-    private JFrame paymentFrame = new JFrame("Payment")
+    private JFrame paymentFrame = new JFrame("Payment");
 
     public ProfilePage() {
         setTitle("User Profile");
         setSize(1280, 720);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         initComponents();
     }
@@ -323,7 +324,11 @@ public class ProfilePage extends JFrame {
                 selectionLabel.setText("Your selection: " + result);
                 //panel.setVisible(false);
                 //seatingMapFrame.setVisible(false);
-                displayPayment(chosenTicket, panel);
+//                displayPayment(chosenTicket, panel);
+                PaymentPanel paymentFrame = new PaymentPanel(chosenTicket, chosenTicket.getCancellationInsurance());
+                paymentFrame.setVisible(true);
+                paymentFrame.pack();
+                paymentFrame.setLocationRelativeTo(null);
             } else {
                 JOptionPane.showMessageDialog(null, "This seat is taken, please select an empty seat (currently 0A and 0B are empty)");
             }

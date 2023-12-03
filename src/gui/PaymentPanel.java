@@ -2,13 +2,21 @@ package gui;
 
 import java.awt.Color;
 import javax.swing.JOptionPane;
+import src.controllers.PaymentController;
 import src.controllers.UserController;
 import src.entity.Address;
+import src.entity.CancellationInsurance;
+import src.entity.CreditCard;
+import src.entity.Ticket;
 
 public class PaymentPanel extends javax.swing.JFrame {
     private Address add;
+    Ticket ticket;
+    CancellationInsurance insurance;
     
-    public PaymentPanel() {
+    public PaymentPanel(Ticket tkt, CancellationInsurance ins ) {
+        this.ticket = tkt;
+        this.insurance = ins;
         initComponents();
     }
 
@@ -155,7 +163,7 @@ public class PaymentPanel extends javax.swing.JFrame {
         String exp = expiryDate.getText();
         String cvvInt = cvv.getText();
         
-        CreditCard creditCard = new CreditCard(Long.parseLong(nbr) , Integer.parseInt(exp), Integer.parseInt(cvvInt));
+        CreditCard creditCard = new CreditCard(Long.valueOf(nbr) , Integer.parseInt(exp), Integer.parseInt(cvvInt));
         System.out.println("Credit Card Details: " + creditCard.toString());
         if(PaymentController.getInstance().makePayment(ticket, creditCard, insurance)){
         JOptionPane.showMessageDialog(this, "Ticket has been successfully booked! you will receive an email shortly");
