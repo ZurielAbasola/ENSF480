@@ -1,5 +1,6 @@
-package gui;
+package src.gui;
 
+import gui.SignUp;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 import src.controllers.UserController;

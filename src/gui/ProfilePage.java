@@ -36,7 +36,7 @@ public class ProfilePage extends JFrame {
 
 
     private JFrame seatingMapFrame = new JFrame("Seating");
-    private JFrame paymentFrame = new JFrame("Payment")
+    private JFrame paymentFrame = new JFrame("Payment");
 
     public ProfilePage() {
 //        this.userController = user;
@@ -370,7 +370,7 @@ public class ProfilePage extends JFrame {
 
     // Method to show the image
     private void showImage(JLabel imageLabel, JPanel mainPanel) {
-        ImageIcon icon = new ImageIcon("SeatingMap.jpg");
+        ImageIcon icon = new ImageIcon("SeatingMap.png");
         Image image = icon.getImage().getScaledInstance(mainPanel.getWidth() - 100, mainPanel.getHeight() - 120, Image.SCALE_SMOOTH);
         imageLabel.setIcon(new ImageIcon(image));
         mainPanel.add(imageLabel);
