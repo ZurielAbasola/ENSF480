@@ -138,7 +138,7 @@ public class ProfilePage extends JFrame {
             }
         });
         searchByPanel.add(saveButton);
-        searchByPanel.add(cancelandReturnButton);
+//        searchByPanel.add(cancelandReturnButton);
         // Make the frame visible
         setVisible(true);
         add(panel);
@@ -263,7 +263,8 @@ public class ProfilePage extends JFrame {
         // Set frame properties
         seatingMapFrame.getContentPane().add(mainPanel);
         seatingMapFrame.setSize(1080, 720);
-        seatingMapFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        seatingMapFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        seatingMapFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         seatingMapFrame.setVisible(true);
 
         // Add action listeners
